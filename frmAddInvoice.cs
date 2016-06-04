@@ -284,7 +284,7 @@ namespace POS_Andy
                 //    new System.EventHandler(cbVendorName_SelectedIndexChanged);
 
                 //btnAdd.Click += (sender, e) => { btnAdd_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
-                btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
+                btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString(), txtTotHarga); };
                 listNamaBarang.KeyPress += (sender, e) => { listNamaBarang_KeyDown(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
                 dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtTotHarga));
@@ -447,10 +447,11 @@ namespace POS_Andy
             }
         }
 
-        private void btnClear_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, DataTable dtItem, string itemName)
+        private void btnClear_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, DataTable dtItem, string itemName, TextBox txtTotHarga)
         {
             Button btnClear = (Button)sender;
             DataTable dtCopy = new DataTable();
+            int subTotal = 0;
 
             if (dgv_invoice.DataSource != null)
                 dtCopy = (DataTable)(dgv_invoice.DataSource);
@@ -482,6 +483,20 @@ namespace POS_Andy
                         dgv_invoice.Rows.RemoveAt(row.Index);
                     }
                 }
+
+                for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
+                {
+                    subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                }
+
+                if (dgv_invoice.Rows.Count == 0)
+                    subTotal = 0;
+
+                //txtTotHarga.Text = subTotal.ToString();
+                txtTotHarga.Text = subTotal.ToString("C3", CultureInfo.CreateSpecificCulture("id-ID"));
+                string[] stringSeparators = new string[] { "Rp" };
+                if (txtTotHarga.Text.Contains("Rp") == true)
+                    txtTotHarga.Text = "Rp " + txtTotHarga.Text.Split(stringSeparators, StringSplitOptions.None)[1].Split(',')[0] + ",-";
             }
         }
 
@@ -766,7 +781,7 @@ namespace POS_Andy
                 txtTotHarga.Text = subTotal.ToString("C3", CultureInfo.CreateSpecificCulture("id-ID"));
                 string[] stringSeparators = new string[] { "Rp" };
                 if (txtTotHarga.Text.Contains("Rp") == true)
-                    txtTotHarga.Text = "Rp " + txtTotHarga.Text.Split(stringSeparators, StringSplitOptions.None)[1];
+                    txtTotHarga.Text = "Rp " + txtTotHarga.Text.Split(stringSeparators, StringSplitOptions.None)[1].Split(',')[0] + ",-";
 
             }
             catch (Exception ex)
