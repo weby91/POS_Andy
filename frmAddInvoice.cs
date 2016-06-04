@@ -214,10 +214,10 @@ namespace POS_Andy
                 lblNamaBarang.Location = new System.Drawing.Point(40, 210);
                 dgv_invoice.Location = new System.Drawing.Point(40, 260);
                 dgv_invoice.Size = new System.Drawing.Size(830, 155);
-                btnAdd.Size = new System.Drawing.Size(100, 20);
-                btnAdd.Location = new System.Drawing.Point(770, 230);
+                //btnAdd.Size = new System.Drawing.Size(100, 20);
+                //btnAdd.Location = new System.Drawing.Point(770, 230);
                 btnClear.Size = new System.Drawing.Size(100, 20);
-                btnClear.Location = new System.Drawing.Point(670, 230);
+                btnClear.Location = new System.Drawing.Point(770, 230);
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
 
@@ -225,7 +225,7 @@ namespace POS_Andy
 
                 groupBoxDataPembeli[0].Controls.Add(listNamaBarang);
                 groupBoxDataPembeli[0].Controls.Add(btnClear);
-                groupBoxDataPembeli[0].Controls.Add(btnAdd);
+                //groupBoxDataPembeli[0].Controls.Add(btnAdd);
                 groupBoxDataPembeli[0].Controls.Add(lblNamaVendor);
                 groupBoxDataPembeli[0].Controls.Add(lblNamaBarang);
                 //groupBoxDataPembeli[0].Controls.Add(cbVendorName);
@@ -269,11 +269,10 @@ namespace POS_Andy
 
                 //btnAdd.Click += (sender, e) => { btnAdd_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
-                listNamaBarang.KeyDown += (sender, e) => { listNamaBarang_KeyDown(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
+                listNamaBarang.KeyPress += (sender, e) => { listNamaBarang_KeyDown(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
 
                 //button.Click += (sender, e) => { MyHandler(sender, e, s1, s2); };
-
 
                 if (flag != false)
                 {
@@ -468,7 +467,7 @@ namespace POS_Andy
         {
             DataTable dtCopy = new DataTable();
             
-            if(e.KeyCode == Keys.Enter)
+            if(e.KeyChar == (char)Keys.Enter)
             {
                 if (dgv_invoice.DataSource != null)
                     dtCopy = (DataTable)(dgv_invoice.DataSource);
@@ -692,27 +691,46 @@ namespace POS_Andy
 
         void dgv_invoice_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            // Clear the row error in case the user presses ESC.   
-            DataGridView dgv_invoice = (DataGridView)sender;
-            dgv_invoice.Rows[e.RowIndex].ErrorText = String.Empty;
-
-            DataGridViewRow row = dgv_invoice.Rows[e.RowIndex];
-            int hargaEceran = int.Parse(row.Cells[3].Value.ToString()); // Harga grosir
-            int hargaGrosir = int.Parse(row.Cells[4].Value.ToString()); // Harga grosir
-            int minQtyGrosir = int.Parse(row.Cells[5].Value.ToString()); // Min qty grosir
-            int jmlBeli = int.Parse(row.Cells[10].Value.ToString()); // Jumlah Beli
-            int total = int.Parse(row.Cells[11].Value.ToString()); // Total
-
-            if (jmlBeli >= minQtyGrosir)
+            try
             {
-                total = hargaGrosir * jmlBeli;
-            }
-            else
-            {
-                total = hargaEceran * jmlBeli;
-            }
+                // Clear the row error in case the user presses ESC.   
+                DataGridView dgv_invoice = (DataGridView)sender;
+                dgv_invoice.Rows[e.RowIndex].ErrorText = String.Empty;
 
-            row.Cells[11].Value = total.ToString();
+                int hargaGrosir = 0;
+                int minQtyGrosir = 0;
+                int jmlBeli = 0;
+                int total = 0;
+
+                DataGridViewRow row = dgv_invoice.Rows[e.RowIndex];
+                int hargaEceran = int.Parse(row.Cells[3].Value.ToString()); // Harga grosir
+                if(row.Cells[4].Value.ToString() != "")
+                    hargaGrosir = int.Parse(row.Cells[4].Value.ToString()); // Harga grosir
+                if (row.Cells[5].Value.ToString() != "")
+                    minQtyGrosir = int.Parse(row.Cells[5].Value.ToString()); // Min qty grosir
+                if (row.Cells[10].Value.ToString() != "")
+                    jmlBeli = int.Parse(row.Cells[10].Value.ToString()); // Jumlah Beli
+                if (row.Cells[11].Value.ToString() != "")
+                    total = int.Parse(row.Cells[11].Value.ToString()); // Total
+
+                if(jmlBeli > 0)
+                {
+                    if (jmlBeli >= minQtyGrosir)
+                    {
+                        total = hargaGrosir * jmlBeli;
+                    }
+                    else
+                    {
+                        total = hargaEceran * jmlBeli;
+                    }
+
+                    row.Cells[11].Value = total.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }            
         }
 
         private void btn_save_Click(object sender, EventArgs e)

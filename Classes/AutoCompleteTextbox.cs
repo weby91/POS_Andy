@@ -421,7 +421,8 @@ namespace POS_Andy.Classes
                 // calculate the remeining height beneath the TextBox
                 panel.Height = this.ParentForm.ClientSize.Height - this.Height - this.Location.Y;
                 // and the Location to use
-                panel.Location = this.Location + new Size(0, this.Height);
+                //panel.Location = this.Location + new Size(0, this.Height);
+                panel.Location = this.Location + new Size(38, 132);
                 // Panel and ListBox have to be added to ParentForm.Controls before calling BingingContext
                 if (!this.ParentForm.Controls.Contains(panel))
                 {
