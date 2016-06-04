@@ -161,6 +161,9 @@ namespace POS_Andy
                 //txtNamaBarang.Name = "txtNamaBarang" + ctrTab.ToString();
                 listNamaBarang.Name = "listNamaBarang" + ctrTab.ToString();
                 txtTotHarga.Name = "txtTotHarga" + ctrTab.ToString();
+                chkDP.Name = "chkDP" + ctrTab.ToString();
+                chkPalet.Name = "chkPalet" + ctrTab.ToString();
+                chkTitipOngkos.Name = "chkTitipOngkos" + ctrTab.ToString();
 
                 btnSave.Name = "btnSave" + ctrTab.ToString();
                 btnSave.Text = "Proses";
@@ -186,6 +189,9 @@ namespace POS_Andy
                 lblNamaBarang.Text = "Nama Barang";
                 btnAdd.Text = "Tambah";
                 btnClear.Text = "Hapus";
+                chkDP.Text = "DP";
+                chkPalet.Text = "Palet";
+                chkTitipOngkos.Text = "Titip Ongkos";
 
                 dtpPembayaran.Format = DateTimePickerFormat.Custom;
                 dtpPembayaran.CustomFormat = "dd-MM-yyyy";
@@ -221,9 +227,13 @@ namespace POS_Andy
                 //rtbMetodePembayaran.Size = new System.Drawing.Size(180, 60);
                 cbEkspedisi.Location = new System.Drawing.Point(480, 50);
                 cbEkspedisi.Size = new System.Drawing.Size(150, 60);
-
                 dtpPembayaran.Location = new System.Drawing.Point(480, 80);
                 dtpPembayaran.Size = new System.Drawing.Size(180, 60);
+                chkDP.Location = new System.Drawing.Point(480, 110);
+                chkDP.Size = new System.Drawing.Size(70, 40);
+                chkPalet.Location = new System.Drawing.Point(550, 110);
+                chkTitipOngkos.Location = new System.Drawing.Point(620, 110);
+                //chkDP.Size = new System.Drawing.Size(150, 60);
 
                 //cbVendorName.Size = new System.Drawing.Size(250, 20);
                 //cbVendorName.Location = new System.Drawing.Point(40, 230);
@@ -247,6 +257,9 @@ namespace POS_Andy
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
 
+                groupBoxDataPembeli[0].Controls.Add(chkDP);
+                groupBoxDataPembeli[0].Controls.Add(chkPalet);
+                groupBoxDataPembeli[0].Controls.Add(chkTitipOngkos);
                 groupBoxDataPembeli[0].Controls.Add(listNamaBarang);
                 groupBoxDataPembeli[0].Controls.Add(btnClear);
                 groupBoxDataPembeli[0].Controls.Add(btnSave);
