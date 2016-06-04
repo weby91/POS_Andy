@@ -807,16 +807,26 @@ namespace POS_Andy
 
                 if(jmlBeli > 0)
                 {
-                    if (jmlBeli >= minQtyGrosir)
+                    if(jmlBeli <= int.Parse(row.Cells["Stok"].Value.ToString()))
                     {
-                        total = hargaGrosir * jmlBeli;
+                        if (jmlBeli >= minQtyGrosir)
+                        {
+                            total = hargaGrosir * jmlBeli;
+                        }
+                        else
+                        {
+                            total = hargaEceran * jmlBeli;
+                        }
+
+                        row.Cells[11].Value = total.ToString();
                     }
                     else
                     {
-                        total = hargaEceran * jmlBeli;
+                        MessageBox.Show("Jumlah Beli tidak boleh lebih besar dari stok barang");
+                        row.Cells["Jumlah Beli"].Value = "";
+                        row.Cells["Total Harga"].Value = "";
                     }
 
-                    row.Cells[11].Value = total.ToString();
                 }
                 else
                 {
@@ -864,13 +874,19 @@ namespace POS_Andy
                 string invoiceName = "";
                 string last4digits = "";
                 string alertMsg = "";
-                int day = 0;
-                int month = 0;
-                int year = 0;
+                string day = "";
+                string month = "";
+                string year = "";
                 string lastInvoiceId = "";
                 string nextInvoiceNo = "";
                 int purchase_total = 0;
                 DateTime thisDay = DateTime.Today;
+
+                day = thisDay.Day.ToString();
+                day = day.Length < 2 ? "0" + day : day;
+                month = thisDay.Month.ToString();
+                month = month.Length < 2 ? "0" + month : month;
+                year = thisDay.Year.ToString();
 
                 //Validation
                 if (txtNamaPembeli.Text.ToString() == "")
@@ -884,6 +900,12 @@ namespace POS_Andy
                 else if (dgv_invoice.Rows.Count == 0)
                     alertMsg = "Silahkan pilih barang yang ingin dibeli";
 
+                for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
+                {
+                    if (dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString() == "")
+                        alertMsg = "Jumlah beli tidak boleh kosong";
+                }
+
                 if (alertMsg == "")
                 {
                     dtInvoice = Core.SelectInvoice();
@@ -893,46 +915,102 @@ namespace POS_Andy
                         last4digits = invoiceName.Substring(invoiceName.Length - 4, 4);
                         nextInvoiceNo = (int.Parse(last4digits) + 1).ToString();
 
-                        for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
-                        {
-                            if (dgv_invoice.Rows[i].Cells[11].Value.ToString() != "")
-                                purchase_total += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
-                            else
-                                purchase_total += 0;
-                        }
+                        //for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
+                        //{
+                        //    if (dgv_invoice.Rows[i].Cells[11].Value.ToString() != "")
+                        //        purchase_total += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                        //    else
+                        //        purchase_total += 0;
+                        //}
 
-                        lastInvoiceId = Core.TambahInvoice(nextInvoiceNo, txtNamaPembeli.Text, rtbAlamatPembeli.Text.ToString()
-                                                , txtCompanyName.Text, txtContactNo.Text, payment_method.SelectedValue.ToString()
-                                                , purchase_total);
+                        //lastInvoiceId = Core.TambahInvoice(nextInvoiceNo, txtNamaPembeli.Text, rtbAlamatPembeli.Text.ToString()
+                        //                        , txtCompanyName.Text, txtContactNo.Text, payment_method.SelectedValue.ToString()
+                        //                        , purchase_total);
 
-                        if(int.Parse(lastInvoiceId) > 0)
-                        {
-                            string item_name;
-                            string vendor_name;
-                            int item_total;
-                            int isTO;
-                            int isDP;
-                            int isPalet;
+                        //if(int.Parse(lastInvoiceId) > 0)
+                        //{
+                        //    string item_name;
+                        //    string vendor_name;
+                        //    int item_total;
+                        //    int isTO;
+                        //    int isDP;
+                        //    int isPalet;
 
-                            isTO = chkTO.Checked == true ? 1 : 0;
-                            isDP = chkDP.Checked == true ? 1 : 0;
-                            isPalet = chkPalet.Checked == true ? 1 : 0;
+                        //    isTO = chkTO.Checked == true ? 1 : 0;
+                        //    isDP = chkDP.Checked == true ? 1 : 0;
+                        //    isPalet = chkPalet.Checked == true ? 1 : 0;
 
-                            for (int i = 0; i < dgv_invoice.Rows.Count; i++)
-                            {
-                                item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
-                                vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
-                                item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
-                                string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), nextInvoiceNo
-                                                            , item_name, vendor_name, item_total, isTO, isDP, isPalet);
-                            }
-                        }
+                        //    for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                        //    {
+                        //        item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
+                        //        vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
+                        //        item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
+
+                        //        string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), nextInvoiceNo
+                        //                                    , item_name, vendor_name, item_total, isTO, isDP, isPalet);
+                        //    }
+                        //}
 
                         //string[] stringSeparators = new string[] { "INV" };
                         //if (invoiceName.Contains("INV") == true)
                         //    txtTotHarga.Text = "Rp " + txtTotHarga.Text.Split(stringSeparators, StringSplitOptions.None)[1].Split(',')[0] + ",-";
                     }
-                        
+                    else
+                    {
+                        last4digits = "0000";
+                        nextInvoiceNo = (int.Parse(last4digits) + 1).ToString();
+                    }
+
+                    if (nextInvoiceNo.Length == 1)
+                        nextInvoiceNo = "000" + nextInvoiceNo;
+                    else if (nextInvoiceNo.Length == 2)
+                        nextInvoiceNo = "00" + nextInvoiceNo;
+                    else if (nextInvoiceNo.Length == 3)
+                        nextInvoiceNo = "0" + nextInvoiceNo;
+
+                    for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
+                    {
+                        if (dgv_invoice.Rows[i].Cells[11].Value.ToString() != "")
+                            purchase_total += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                        else
+                            purchase_total += 0;
+                    }
+
+                    lastInvoiceId = Core.TambahInvoice("INV" + year + month + day + nextInvoiceNo, txtNamaPembeli.Text, rtbAlamatPembeli.Text.ToString()
+                                            , txtCompanyName.Text, txtContactNo.Text, payment_method.SelectedValue.ToString()
+                                            , purchase_total);
+
+                    if (int.Parse(lastInvoiceId) > 0)
+                    {
+                        string item_name;
+                        string vendor_name;
+                        int item_total;
+                        int isTO;
+                        int isDP;
+                        int isPalet;
+
+                        isTO = chkTO.Checked == true ? 1 : 0;
+                        isDP = chkDP.Checked == true ? 1 : 0;
+                        isPalet = chkPalet.Checked == true ? 1 : 0;
+
+                        for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                        {
+                            item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
+                            vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
+                            item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
+
+                            string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), "INV" + year + month + day + nextInvoiceNo
+                                                        , item_name, vendor_name, item_total, isTO, isDP, isPalet);
+
+                            alertMsg = insertInvoiceDetail;
+                        }
+
+                        if (alertMsg == "")
+                            MessageBox.Show("Proses Pembuatan Invoice berhasil");
+                        else
+                            MessageBox.Show("Error : Proses Pembuatan Invoice gagal");
+                    }
+
                 }
                 else
                 {

@@ -329,7 +329,7 @@ namespace POS_Andy.Classes
         //public static string TambahInvoice(string invoice_no, string buyer_name, string buyer_address, string company_name
         //                                , string buyer_contact_no, string payment_method, string item_name, string vendor_name
         //                                , int is_TO, int is_DP, int is_Palet)
-        public static string TambahInvoice(string invoice_no, string buyer_name, string buyer_address, string company_name
+        public static string TambahInvoice(string invoice_name, string buyer_name, string buyer_address, string company_name
                                         , string buyer_contact_no, string payment_method, int purchase_total)
         {
             string result = "";
@@ -353,7 +353,7 @@ namespace POS_Andy.Classes
                                     ",invoice_dt                                           " +
                                     ",created_by                                           " +
                                     ") VALUES                                           " +
-                                    "(CONCAT('INV',YEAR(NOW()), MONTH(NOW()), DAY(NOW()), @invoice_no)                       " +
+                                    "(@invoice_name                       " +
                                     ",@buyer_name                                               " +
                                     ",@buyer_address                                               " +
                                     ",@company_name                                               " +
@@ -362,12 +362,9 @@ namespace POS_Andy.Classes
                                     ",@purchase_total                                               " +
                                     ",NOW()                                              " +
                                     ",@superadmin                                               " +
-                                    ")                                               " + Environment.NewLine +
-                                    "select last_insert_id()";
+                                    ")                                               ";
 
-                int id = Convert.ToInt32(cmd.ExecuteScalar());
-                
-                cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
+                cmd.Parameters.AddWithValue("@invoice_name", invoice_name);
                 cmd.Parameters.AddWithValue("@buyer_name", buyer_name);
                 cmd.Parameters.AddWithValue("@buyer_address", buyer_address);
                 cmd.Parameters.AddWithValue("@company_name", company_name);
@@ -379,6 +376,14 @@ namespace POS_Andy.Classes
                 //cmd.Parameters.AddWithValue("@satuan", satuan);
                 //cmd.Parameters.AddWithValue("@isi", isi);
                 cmd.Parameters.AddWithValue("@superadmin", "andy");
+
+                cmd.ExecuteNonQuery();
+
+
+                cmd.CommandText = "select last_insert_id()";
+                int id = Convert.ToInt32(cmd.ExecuteScalar());
+                
+                
 
                 result = id.ToString();
 
@@ -406,7 +411,7 @@ namespace POS_Andy.Classes
             {
                 con.Open();
 
-                cmd.CommandText = "INSERT                                             " +
+                cmd.CommandText = "INSERTs                                             " +
                                     "INTO ms_invoice_detail                                       " +
                                     "(invoice_id                                          " +
                                     ",invoice_name                                          " +
@@ -431,10 +436,9 @@ namespace POS_Andy.Classes
                                     ",@superadmin                                               " +
                                     ")                                               " + Environment.NewLine +
                                     "UPDATE ms_item " +
-                                    "SET stock = stock - "
+                                    "SET stock = stock - @item_total " +
+                                    "WHERE item_name = @item_name AND vendor_name = @vendor_name ";
 
-                cmd.ExecuteNonQuery();
-                
                 cmd.Parameters.AddWithValue("@invoice_id", invoice_id);
                 cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
                 cmd.Parameters.AddWithValue("@item_name", item_name);
@@ -444,6 +448,10 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@is_DP", is_DP);
                 cmd.Parameters.AddWithValue("@is_Palet", is_Palet);
                 cmd.Parameters.AddWithValue("@superadmin", "andy");
+
+                cmd.ExecuteNonQuery();
+                
+                
 
                 con.Close();
             }
