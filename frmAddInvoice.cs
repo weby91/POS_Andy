@@ -231,8 +231,8 @@ namespace POS_Andy
                 btnClear.Location = new System.Drawing.Point(770, 230);
                 btnSave.Size = new System.Drawing.Size(100, 20);
                 btnSave.Location = new System.Drawing.Point(770, 470);
-                txtTotHarga.Size = new System.Drawing.Size(200, 50);
-                txtTotHarga.Location = new System.Drawing.Point(670, 420);
+                txtTotHarga.Size = new System.Drawing.Size(300, 50);
+                txtTotHarga.Location = new System.Drawing.Point(570, 420);
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
@@ -759,8 +759,15 @@ namespace POS_Andy
                     subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
                 }
 
+                if (dgv_invoice.Rows.Count == 0)
+                    subTotal = 0;
+
                 //txtTotHarga.Text = subTotal.ToString();
                 txtTotHarga.Text = subTotal.ToString("C3", CultureInfo.CreateSpecificCulture("id-ID"));
+                string[] stringSeparators = new string[] { "Rp" };
+                if (txtTotHarga.Text.Contains("Rp") == true)
+                    txtTotHarga.Text = "Rp " + txtTotHarga.Text.Split(stringSeparators, StringSplitOptions.None)[1];
+
             }
             catch (Exception ex)
             {
