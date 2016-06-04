@@ -307,10 +307,9 @@ namespace POS_Andy
                 {
                     cbEkspedisi.DataSource = dtEkspedisi;
                     cbEkspedisi.DisplayMember = "nama_ekspedisi";
-                    cbEkspedisi.ValueMember = "item_name";
+                    cbEkspedisi.ValueMember = "nama_ekspedisi";
                     cbEkspedisi.DropDownStyle = ComboBoxStyle.DropDownList;
                 }
-
 
                 //if (dtVendor.Rows.Count > 0)
                 //    dtItem = Core.ListProduct_FilterByVendorName(cbVendorName.SelectedValue.ToString());
@@ -332,6 +331,12 @@ namespace POS_Andy
                 //btnAdd.Click += (sender, e) => { btnAdd_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString(), txtTotHarga); };
                 listNamaBarang.KeyPress += (sender, e) => { listNamaBarang_KeyDown(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
+                btnSave.Click += (sender, e) => {
+                    btnSave_Click(sender, e, dgv_invoice, txtCustomerName.Text.ToString(), rtbAlamat.Text.ToString()
+                              , txtCompanyName.Text.ToString(), txtContactNo.Text.ToString()
+                              , cbEkspedisi.SelectedValue.ToString(), dtpPembayaran.Text.ToString()
+                              , chkDP, chkPalet, chkTitipOngkos, txtTotHarga);};
+
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
                 dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtTotHarga));
 
@@ -842,7 +847,9 @@ namespace POS_Andy
             }            
         }
 
-        private void btn_save_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, string txtNamaPembeli, string txtAlamatPembeli
+                                    ,string txtCompanyName, string txtContactNo, string payment_method, string invoice_dt
+                                    ,CheckBox chkDP, CheckBox chkPalet, CheckBox chkTO, TextBox txtTotHarga)
         {
 
         }
