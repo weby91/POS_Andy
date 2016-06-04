@@ -55,6 +55,7 @@ namespace POS_Andy
                 DataGridView dgv_invoice = new DataGridView();
                 dtVendor = new DataTable();
                 DataTable dtItem = new DataTable();
+                DataTable dtEkspedisi = new DataTable();
 
                 dtVendor = Core.ListVendorName();
 
@@ -84,6 +85,7 @@ namespace POS_Andy
                 Label lblTanggalPembayaran = new Label();
                 Label lblNamaVendor = new Label();
                 Label lblNamaBarang = new Label();
+                Label lblTotal = new Label();
 
                 TextBox txtCustomerName_ = new TextBox();
                 RichTextBox rtbAlamat_ = new RichTextBox();
@@ -98,6 +100,9 @@ namespace POS_Andy
                 txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
                 txtTotHarga.ReadOnly = true;
                 txtTotHarga.TextAlign = HorizontalAlignment.Right;
+
+                lblTotal.Font = new Font(lblTotal.Font.FontFamily, 24);
+                lblTotal.TextAlign = ContentAlignment.MiddleRight;
 
                 ComboBox cbEkspedisi = new ComboBox();
 
@@ -148,6 +153,7 @@ namespace POS_Andy
                 lblTanggalPembayaran.Name = "lblTanggalPembayaran" + ctrTab.ToString();
                 lblNamaVendor.Name = "lblNamaVendor" + ctrTab.ToString();
                 lblNamaBarang.Name = "lblNamaBarang" + ctrTab.ToString();
+                lblTotal.Name = "lblTotal" + ctrTab.ToString();
 
                 btnAdd.Name = "btnAdd" + ctrTab.ToString();
                 btnClear.Name = "btnClear" + ctrTab.ToString();
@@ -192,6 +198,7 @@ namespace POS_Andy
                 chkDP.Text = "DP";
                 chkPalet.Text = "Palet";
                 chkTitipOngkos.Text = "Titip Ongkos";
+                lblTotal.Text = "Total";
 
                 dtpPembayaran.Format = DateTimePickerFormat.Custom;
                 dtpPembayaran.CustomFormat = "dd-MM-yyyy";
@@ -232,7 +239,9 @@ namespace POS_Andy
                 chkDP.Location = new System.Drawing.Point(480, 110);
                 chkDP.Size = new System.Drawing.Size(70, 40);
                 chkPalet.Location = new System.Drawing.Point(550, 110);
+                chkPalet.Size = new System.Drawing.Size(70, 40);
                 chkTitipOngkos.Location = new System.Drawing.Point(620, 110);
+                chkTitipOngkos.Size = new System.Drawing.Size(100, 40);
                 //chkDP.Size = new System.Drawing.Size(150, 60);
 
                 //cbVendorName.Size = new System.Drawing.Size(250, 20);
@@ -253,10 +262,13 @@ namespace POS_Andy
                 btnSave.Location = new System.Drawing.Point(770, 470);
                 txtTotHarga.Size = new System.Drawing.Size(300, 50);
                 txtTotHarga.Location = new System.Drawing.Point(570, 420);
+                lblTotal.Size = new System.Drawing.Size(300, 50);
+                lblTotal.Location = new System.Drawing.Point(270, 420);
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
 
+                groupBoxDataPembeli[0].Controls.Add(lblTotal);
                 groupBoxDataPembeli[0].Controls.Add(chkDP);
                 groupBoxDataPembeli[0].Controls.Add(chkPalet);
                 groupBoxDataPembeli[0].Controls.Add(chkTitipOngkos);
@@ -265,7 +277,7 @@ namespace POS_Andy
                 groupBoxDataPembeli[0].Controls.Add(btnSave);
                 groupBoxDataPembeli[0].Controls.Add(txtTotHarga);
                 //groupBoxDataPembeli[0].Controls.Add(btnAdd);
-                groupBoxDataPembeli[0].Controls.Add(lblNamaVendor);
+                //groupBoxDataPembeli[0].Controls.Add(lblNamaVendor);
                 groupBoxDataPembeli[0].Controls.Add(lblNamaBarang);
                 //groupBoxDataPembeli[0].Controls.Add(cbVendorName);
                 //groupBoxDataPembeli[0].Controls.Add(cbItemName);
@@ -288,6 +300,17 @@ namespace POS_Andy
                 t.Controls.Add(groupBoxDataPembeli_);
 
                 tabControl1.TabPages.Add(t);
+
+                dtEkspedisi = Core.ListEkspedisi();
+
+                if (dtEkspedisi.Rows.Count > 0)
+                {
+                    cbEkspedisi.DataSource = dtEkspedisi;
+                    cbEkspedisi.DisplayMember = "nama_ekspedisi";
+                    cbEkspedisi.ValueMember = "item_name";
+                    cbEkspedisi.DropDownStyle = ComboBoxStyle.DropDownList;
+                }
+
 
                 //if (dtVendor.Rows.Count > 0)
                 //    dtItem = Core.ListProduct_FilterByVendorName(cbVendorName.SelectedValue.ToString());

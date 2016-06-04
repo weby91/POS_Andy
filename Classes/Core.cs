@@ -619,6 +619,39 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        #region ListEkspedisi
+        public static DataTable ListEkspedisi()
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT nama_ekspedisi " +
+                                    "FROM ms_ekspedisi WHERE is_deleted = 0 ORDER BY nama_ekspedisi                                       ";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error : " + ex.ToString();
+            }
+
+            return dt;
+        }
+        #endregion
+
+
         #region ListProduct
         public static DataTable ListProduct()
         {
