@@ -332,9 +332,9 @@ namespace POS_Andy
                 btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString(), txtTotHarga); };
                 listNamaBarang.KeyPress += (sender, e) => { listNamaBarang_KeyDown(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 btnSave.Click += (sender, e) => {
-                    btnSave_Click(sender, e, dgv_invoice, txtCustomerName.Text.ToString(), rtbAlamat.Text.ToString()
-                              , txtCompanyName.Text.ToString(), txtContactNo.Text.ToString()
-                              , cbEkspedisi.SelectedValue.ToString(), dtpPembayaran.Text.ToString()
+                    btnSave_Click(sender, e, dgv_invoice, txtCustomerName_, rtbAlamat_
+                              , txtCompanyName_, txtContactNo_
+                              , cbEkspedisi, dtpPembayaran
                               , chkDP, chkPalet, chkTitipOngkos, txtTotHarga);};
 
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
@@ -847,11 +847,38 @@ namespace POS_Andy
             }            
         }
 
-        private void btnSave_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, string txtNamaPembeli, string txtAlamatPembeli
-                                    ,string txtCompanyName, string txtContactNo, string payment_method, string invoice_dt
+        private void btnSave_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, TextBox txtNamaPembeli, RichTextBox rtbAlamatPembeli
+                                    ,TextBox txtCompanyName, TextBox txtContactNo, ComboBox payment_method, DateTimePicker invoice_dt
                                     ,CheckBox chkDP, CheckBox chkPalet, CheckBox chkTO, TextBox txtTotHarga)
         {
+            try
+            {
+                string alertMsg = "";
+                //Validation
+                if (txtNamaPembeli.Text.ToString() == "")
+                    alertMsg = "Nama Pembeli harus diisi";
+                else if (rtbAlamatPembeli.Text.ToString() == "")
+                    alertMsg = "Alamat Pembeli harus diisi";
+                else if (txtContactNo.Text.ToString() == "")
+                    alertMsg = "No. Telp/HP harus diisi";
+                else if (invoice_dt.Text.ToString() == "")
+                    alertMsg = "Tanggal Pembayaran harus diisi";
+                else if (dgv_invoice.Rows.Count == 0)
+                    alertMsg = "Silahkan pilih barang yang ingin dibeli";
 
+                if (alertMsg == "")
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show(alertMsg);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }
