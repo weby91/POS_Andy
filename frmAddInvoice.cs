@@ -93,6 +93,7 @@ namespace POS_Andy
                 //ListBox listNamaBarang = new ListBox();
                 AutoCompleteTextbox listNamaBarang = new AutoCompleteTextbox();
                 TextBox txtTotHarga = new TextBox();
+                txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
 
                 dtItem = Core.ListProduct();
 
@@ -228,7 +229,7 @@ namespace POS_Andy
                 btnSave.Size = new System.Drawing.Size(100, 20);
                 btnSave.Location = new System.Drawing.Point(770, 470);
                 txtTotHarga.Size = new System.Drawing.Size(200, 50);
-                txtTotHarga.Location = new System.Drawing.Point(670, 440);
+                txtTotHarga.Location = new System.Drawing.Point(670, 430);
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
@@ -707,18 +708,19 @@ namespace POS_Andy
             }
         }
 
-        void dgv_invoice_CellEndEdit(object sender, DataGridViewCellEventArgs e, TextBox tb)
+        void dgv_invoice_CellEndEdit(object sender, DataGridViewCellEventArgs e, TextBox txtTotHarga)
         {
             try
             {
                 // Clear the row error in case the user presses ESC.   
                 DataGridView dgv_invoice = (DataGridView)sender;
                 dgv_invoice.Rows[e.RowIndex].ErrorText = String.Empty;
-                tb.Text = "TESTOI";
+
                 int hargaGrosir = 0;
                 int minQtyGrosir = 0;
                 int jmlBeli = 0;
                 int total = 0;
+                int subTotal = 0;
 
                 DataGridViewRow row = dgv_invoice.Rows[e.RowIndex];
                 int hargaEceran = int.Parse(row.Cells[3].Value.ToString()); // Harga grosir
@@ -744,6 +746,17 @@ namespace POS_Andy
 
                     row.Cells[11].Value = total.ToString();
                 }
+                else
+                {
+                    row.Cells[11].Value = "0";
+                }
+
+                for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
+                {
+                    subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[1].Value);
+                }
+
+                txtTotHarga.Text = subTotal.ToString();
             }
             catch (Exception ex)
             {
