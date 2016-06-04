@@ -411,7 +411,7 @@ namespace POS_Andy.Classes
             {
                 con.Open();
 
-                cmd.CommandText = "INSERTs                                             " +
+                cmd.CommandText = "INSERT                                             " +
                                     "INTO ms_invoice_detail                                       " +
                                     "(invoice_id                                          " +
                                     ",invoice_name                                          " +
@@ -425,7 +425,7 @@ namespace POS_Andy.Classes
                                     ",created_by                                           " +
                                     ") VALUES                                           " +
                                     "(@invoice_id                                               " +
-                                    ",CONCAT('INV',YEAR(NOW()), MONTH(NOW()), DAY(NOW()), @invoice_no)                       " +
+                                    ",@invoice_no                       " +
                                     ",@item_name                                               " +
                                     ",@vendor_name                                               " +
                                     ",@item_total                                               " +
@@ -434,10 +434,7 @@ namespace POS_Andy.Classes
                                     ",@is_Palet                                               " +
                                     ",NOW()                                              " +
                                     ",@superadmin                                               " +
-                                    ")                                               " + Environment.NewLine +
-                                    "UPDATE ms_item " +
-                                    "SET stock = stock - @item_total " +
-                                    "WHERE item_name = @item_name AND vendor_name = @vendor_name ";
+                                    ")                                               ";
 
                 cmd.Parameters.AddWithValue("@invoice_id", invoice_id);
                 cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
@@ -448,10 +445,17 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@is_DP", is_DP);
                 cmd.Parameters.AddWithValue("@is_Palet", is_Palet);
                 cmd.Parameters.AddWithValue("@superadmin", "andy");
+                
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE ms_item " +
+                                    "SET stock = stock - @item_total " +
+                                    "WHERE item_name = @item_name " + Environment.NewLine +
+                                    "AND vendor_name = @vendor_name ";
 
                 cmd.ExecuteNonQuery();
-                
-                
+
+
 
                 con.Close();
             }
