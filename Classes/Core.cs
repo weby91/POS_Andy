@@ -326,7 +326,7 @@ namespace POS_Andy.Classes
         #endregion
 
         #region TambahInvoice
-        public static string TambahInvoice(int invoice_no, string buyer_name, string buyer_address, string company_name
+        public static string TambahInvoice(string invoice_no, string buyer_name, string buyer_address, string company_name
                                         , string buyer_contact_no, string payment_method, string item_name, string vendor_name
                                         , int is_TO, int is_DP, int is_Palet)
         {
@@ -348,20 +348,14 @@ namespace POS_Andy.Classes
                                     ",buyer_contact_no                                         " +
                                     ",payment_method                                           " +
                                     ") VALUES                                           " +
-                                    "(@in                                               " +
-                                    ",@stock                                               " +
-                                    ",@costPrice                                               " +
-                                    ",@rp                                               " +
-                                    ",@wp                                               " +
-                                    ",@wn                                               " +
-                                    ",@vendor_name                                               " +
-                                    ",@category                                               " +
-                                    ",@satuan                                               " +
-                                    ",@isi                                               " +
+                                    "(CONCAT('INV',YEAR(NOW()), MONTH(NOW()), DAY(NOW()), @invoice_no)                       " +
+                                    ",@buyer_name                                               " +
+                                    ",@buyer_address                                               " +
+                                    ",@company_name                                               " +
+                                    ",@buyer_contact_no                                               " +
+                                    ",@payment_method                                               " +
                                     ",NOW()                                              " +
-                                    ",@superadmin                                               " +
-                                    ",NULL                                               " +
-                                    ",NULL                                              " +
+                                    ",@superadmin                                               " + 
                                     ")                                               ";
 
                 cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
