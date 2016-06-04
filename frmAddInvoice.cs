@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,6 +96,7 @@ namespace POS_Andy
                 TextBox txtTotHarga = new TextBox();
                 txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
                 txtTotHarga.ReadOnly = true;
+                txtTotHarga.TextAlign = HorizontalAlignment.Right;
 
                 dtItem = Core.ListProduct();
 
@@ -230,7 +232,7 @@ namespace POS_Andy
                 btnSave.Size = new System.Drawing.Size(100, 20);
                 btnSave.Location = new System.Drawing.Point(770, 470);
                 txtTotHarga.Size = new System.Drawing.Size(200, 50);
-                txtTotHarga.Location = new System.Drawing.Point(670, 430);
+                txtTotHarga.Location = new System.Drawing.Point(670, 420);
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
@@ -757,7 +759,8 @@ namespace POS_Andy
                     subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
                 }
 
-                txtTotHarga.Text = subTotal.ToString();
+                //txtTotHarga.Text = subTotal.ToString();
+                txtTotHarga.Text = subTotal.ToString("C3", CultureInfo.CreateSpecificCulture("id-ID"));
             }
             catch (Exception ex)
             {
