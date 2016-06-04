@@ -867,6 +867,8 @@ namespace POS_Andy
                 int day = 0;
                 int month = 0;
                 int year = 0;
+                string lastInvoiceId = "";
+                string nextInvoiceNo = "";
                 DateTime thisDay = DateTime.Today;
 
                 //Validation
@@ -888,8 +890,15 @@ namespace POS_Andy
                     {
                         invoiceName = dtInvoice.Rows[0]["invoice_name"].ToString();
                         last4digits = invoiceName.Substring(invoiceName.Length - 4, 4);
+                        nextInvoiceNo = (int.Parse(last4digits) + 1).ToString();
 
+                        lastInvoiceId = Core.TambahInvoice(nextInvoiceNo, txtNamaPembeli.Text, rtbAlamatPembeli.Text.ToString()
+                                                , txtCompanyName.Text, txtContactNo.Text, payment_method.SelectedValue.ToString());
 
+                        if(int.Parse(lastInvoiceId) > 0)
+                        {
+
+                        }
 
                         //string[] stringSeparators = new string[] { "INV" };
                         //if (invoiceName.Contains("INV") == true)

@@ -326,9 +326,11 @@ namespace POS_Andy.Classes
         #endregion
 
         #region TambahInvoice
+        //public static string TambahInvoice(string invoice_no, string buyer_name, string buyer_address, string company_name
+        //                                , string buyer_contact_no, string payment_method, string item_name, string vendor_name
+        //                                , int is_TO, int is_DP, int is_Palet)
         public static string TambahInvoice(string invoice_no, string buyer_name, string buyer_address, string company_name
-                                        , string buyer_contact_no, string payment_method, string item_name, string vendor_name
-                                        , int is_TO, int is_DP, int is_Palet)
+                                        , string buyer_contact_no, string payment_method)
         {
             string result = "";
             string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
@@ -355,9 +357,12 @@ namespace POS_Andy.Classes
                                     ",@buyer_contact_no                                               " +
                                     ",@payment_method                                               " +
                                     ",NOW()                                              " +
-                                    ",@superadmin                                               " + 
-                                    ")                                               ";
+                                    ",@superadmin                                               " +
+                                    ")                                               " + Environment.NewLine +
+                                    "select last_insert_id()";
 
+                int id = Convert.ToInt32(cmd.ExecuteScalar());
+                
                 cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
                 cmd.Parameters.AddWithValue("@buyer_name", buyer_name);
                 cmd.Parameters.AddWithValue("@buyer_address", buyer_address);
@@ -370,7 +375,7 @@ namespace POS_Andy.Classes
                 //cmd.Parameters.AddWithValue("@isi", isi);
                 cmd.Parameters.AddWithValue("@superadmin", "andy");
 
-                cmd.ExecuteNonQuery();
+                result = id.ToString();
 
                 con.Close();
             }
