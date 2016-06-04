@@ -94,6 +94,7 @@ namespace POS_Andy
                 AutoCompleteTextbox listNamaBarang = new AutoCompleteTextbox();
                 TextBox txtTotHarga = new TextBox();
                 txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
+                txtTotHarga.ReadOnly = true;
 
                 dtItem = Core.ListProduct();
 
@@ -753,7 +754,7 @@ namespace POS_Andy
 
                 for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
                 {
-                    subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[1].Value);
+                    subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
                 }
 
                 txtTotHarga.Text = subTotal.ToString();
