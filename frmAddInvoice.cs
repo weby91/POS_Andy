@@ -101,6 +101,10 @@ namespace POS_Andy
 
                 ComboBox cbEkspedisi = new ComboBox();
 
+                CheckBox chkPalet = new CheckBox();
+                CheckBox chkDP = new CheckBox();
+                CheckBox chkTitipOngkos = new CheckBox();
+
                 dtItem = Core.ListProduct();
 
                 List<string> source = dtItem.AsEnumerable().Select(x => x[0].ToString()).ToList();
@@ -202,7 +206,7 @@ namespace POS_Andy
                 lblContactNo_.Location = new System.Drawing.Point(19, 147);
                 lblMetodePembayaran.Location = new System.Drawing.Point(350, 50);
                 lblMetodePembayaran.Size = new System.Drawing.Size(120, 20);
-                lblTanggalPembayaran.Location = new System.Drawing.Point(350, 120);
+                lblTanggalPembayaran.Location = new System.Drawing.Point(350, 80);
                 lblTanggalPembayaran.Size = new System.Drawing.Size(120, 20);
 
                 txtCustomerName_.Location = new System.Drawing.Point(125, 25);
@@ -218,7 +222,7 @@ namespace POS_Andy
                 cbEkspedisi.Location = new System.Drawing.Point(480, 50);
                 cbEkspedisi.Size = new System.Drawing.Size(150, 60);
 
-                dtpPembayaran.Location = new System.Drawing.Point(480, 120);
+                dtpPembayaran.Location = new System.Drawing.Point(480, 80);
                 dtpPembayaran.Size = new System.Drawing.Size(180, 60);
 
                 //cbVendorName.Size = new System.Drawing.Size(250, 20);
