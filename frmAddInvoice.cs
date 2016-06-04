@@ -869,6 +869,7 @@ namespace POS_Andy
                 int year = 0;
                 string lastInvoiceId = "";
                 string nextInvoiceNo = "";
+                int purchase_total = 0;
                 DateTime thisDay = DateTime.Today;
 
                 //Validation
@@ -892,12 +893,39 @@ namespace POS_Andy
                         last4digits = invoiceName.Substring(invoiceName.Length - 4, 4);
                         nextInvoiceNo = (int.Parse(last4digits) + 1).ToString();
 
+                        for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
+                        {
+                            if (dgv_invoice.Rows[i].Cells[11].Value.ToString() != "")
+                                purchase_total += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                            else
+                                purchase_total += 0;
+                        }
+
                         lastInvoiceId = Core.TambahInvoice(nextInvoiceNo, txtNamaPembeli.Text, rtbAlamatPembeli.Text.ToString()
-                                                , txtCompanyName.Text, txtContactNo.Text, payment_method.SelectedValue.ToString());
+                                                , txtCompanyName.Text, txtContactNo.Text, payment_method.SelectedValue.ToString()
+                                                , purchase_total);
 
                         if(int.Parse(lastInvoiceId) > 0)
                         {
+                            string item_name;
+                            string vendor_name;
+                            int item_total;
+                            int isTO;
+                            int isDP;
+                            int isPalet;
 
+                            isTO = chkTO.Checked == true ? 1 : 0;
+                            isDP = chkDP.Checked == true ? 1 : 0;
+                            isPalet = chkPalet.Checked == true ? 1 : 0;
+
+                            for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                            {
+                                item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
+                                vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
+                                item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
+                                string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), nextInvoiceNo
+                                                            , item_name, vendor_name, item_total, isTO, isDP, isPalet);
+                            }
                         }
 
                         //string[] stringSeparators = new string[] { "INV" };
