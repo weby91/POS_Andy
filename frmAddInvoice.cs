@@ -48,6 +48,8 @@ namespace POS_Andy
         {
             try
             {
+                var provider = new System.Globalization.CultureInfo("id-ID");
+
                 TabPage t = new TabPage();
                 DataGridView dgv_invoice = new DataGridView();
                 dtVendor = new DataTable();
@@ -90,6 +92,7 @@ namespace POS_Andy
                 //TextBox txtNamaBarang = new TextBox();
                 //ListBox listNamaBarang = new ListBox();
                 AutoCompleteTextbox listNamaBarang = new AutoCompleteTextbox();
+                TextBox txtTotHarga = new TextBox();
 
                 dtItem = Core.ListProduct();
 
@@ -101,7 +104,7 @@ namespace POS_Andy
 
                 //cbVendorName = new ComboBox();
                 //cbItemName = new ComboBox();
-
+                Button btnSave = new Button();
                 btnAdd = new Button();
                 btnClear = new Button();
 
@@ -145,6 +148,10 @@ namespace POS_Andy
                 rtbMetodePembayaran.Name = "rtbMetodePembayaran" + ctrTab.ToString();
                 //txtNamaBarang.Name = "txtNamaBarang" + ctrTab.ToString();
                 listNamaBarang.Name = "listNamaBarang" + ctrTab.ToString();
+                txtTotHarga.Name = "txtTotHarga" + ctrTab.ToString();
+
+                btnSave.Name = "btnSave" + ctrTab.ToString();
+                btnSave.Text = "Proses";
 
                 //cbVendorName.Name = "cbVendorName" + ctrTab.ToString();
                 //cbItemName.Name = "cbItemName" + ctrTab.ToString();
@@ -218,13 +225,18 @@ namespace POS_Andy
                 //btnAdd.Location = new System.Drawing.Point(770, 230);
                 btnClear.Size = new System.Drawing.Size(100, 20);
                 btnClear.Location = new System.Drawing.Point(770, 230);
+                btnSave.Size = new System.Drawing.Size(100, 20);
+                btnSave.Location = new System.Drawing.Point(770, 470);
+                txtTotHarga.Size = new System.Drawing.Size(200, 50);
+                txtTotHarga.Location = new System.Drawing.Point(670, 440);
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
-
                 dtpPembayaran.BringToFront();
 
                 groupBoxDataPembeli[0].Controls.Add(listNamaBarang);
                 groupBoxDataPembeli[0].Controls.Add(btnClear);
+                groupBoxDataPembeli[0].Controls.Add(btnSave);
+                groupBoxDataPembeli[0].Controls.Add(txtTotHarga);
                 //groupBoxDataPembeli[0].Controls.Add(btnAdd);
                 groupBoxDataPembeli[0].Controls.Add(lblNamaVendor);
                 groupBoxDataPembeli[0].Controls.Add(lblNamaBarang);
@@ -271,6 +283,7 @@ namespace POS_Andy
                 btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 listNamaBarang.KeyPress += (sender, e) => { listNamaBarang_KeyDown(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
+                dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtTotHarga));
 
                 //button.Click += (sender, e) => { MyHandler(sender, e, s1, s2); };
 
@@ -408,13 +421,18 @@ namespace POS_Andy
                         dgv_invoice.Columns[11].SortMode = DataGridViewColumnSortMode.NotSortable;
 
                         dgv_invoice.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+                        dgv_invoice.Columns[11].ValueType = Type.GetType("System.Decimal");
+                        dgv_invoice.Columns[11].DefaultCellStyle.Format = "c";
                     }
 
                     // Display.
                     this.Text = output;
 
                     //dgv_invoice.CellContentClick += new DataGridViewCellEventHandler(dgv_invoice_CellClick);
-                    dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler(dgv_invoice_CellEndEdit);
+                    //btnClear.Click += (sender, e) => { btnClear_Click(sender, e, dgv_invoice, dtItem, listNamaBarang.Text.ToString()); };
+
+                    //dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtCompanyName));
                 }
 
             }
@@ -555,7 +573,7 @@ namespace POS_Andy
                         this.Text = output;
 
                         //dgv_invoice.CellContentClick += new DataGridViewCellEventHandler(dgv_invoice_CellClick);
-                        dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler(dgv_invoice_CellEndEdit);
+                        //dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler(dgv_invoice_CellEndEdit);
                     }
 
                 }
@@ -689,14 +707,14 @@ namespace POS_Andy
             }
         }
 
-        void dgv_invoice_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        void dgv_invoice_CellEndEdit(object sender, DataGridViewCellEventArgs e, TextBox tb)
         {
             try
             {
                 // Clear the row error in case the user presses ESC.   
                 DataGridView dgv_invoice = (DataGridView)sender;
                 dgv_invoice.Rows[e.RowIndex].ErrorText = String.Empty;
-
+                tb.Text = "TESTOI";
                 int hargaGrosir = 0;
                 int minQtyGrosir = 0;
                 int jmlBeli = 0;
