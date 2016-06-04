@@ -853,9 +853,21 @@ namespace POS_Andy
         {
             try
             {
+                //delete later - Autofill textbox
+                txtNamaPembeli.Text = "Johny";
+                rtbAlamatPembeli.Text = "Jl. Pancasila No 5";
+                txtCompanyName.Text = "PT. Mitrausaha Group";
+                txtContactNo.Text = "0812910231";
+                //
+
                 DataTable dtInvoice = new DataTable();
                 string invoiceName = "";
+                string last4digits = "";
                 string alertMsg = "";
+                int day = 0;
+                int month = 0;
+                int year = 0;
+                DateTime thisDay = DateTime.Today;
 
                 //Validation
                 if (txtNamaPembeli.Text.ToString() == "")
@@ -872,7 +884,18 @@ namespace POS_Andy
                 if (alertMsg == "")
                 {
                     dtInvoice = Core.SelectInvoice();
-                    if(dtInvoice.Rows.Count > 0)
+                    if (dtInvoice.Rows.Count > 0)
+                    {
+                        invoiceName = dtInvoice.Rows[0]["invoice_name"].ToString();
+                        last4digits = invoiceName.Substring(invoiceName.Length - 4, 4);
+
+
+
+                        //string[] stringSeparators = new string[] { "INV" };
+                        //if (invoiceName.Contains("INV") == true)
+                        //    txtTotHarga.Text = "Rp " + txtTotHarga.Text.Split(stringSeparators, StringSplitOptions.None)[1].Split(',')[0] + ",-";
+                    }
+                        
                 }
                 else
                 {
