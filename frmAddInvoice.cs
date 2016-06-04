@@ -93,10 +93,13 @@ namespace POS_Andy
                 //TextBox txtNamaBarang = new TextBox();
                 //ListBox listNamaBarang = new ListBox();
                 AutoCompleteTextbox listNamaBarang = new AutoCompleteTextbox();
+
                 TextBox txtTotHarga = new TextBox();
                 txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
                 txtTotHarga.ReadOnly = true;
                 txtTotHarga.TextAlign = HorizontalAlignment.Right;
+
+                ComboBox cbEkspedisi = new ComboBox();
 
                 dtItem = Core.ListProduct();
 
@@ -150,6 +153,7 @@ namespace POS_Andy
                 txtCompanyName_.Name = "txtCompanyName" + ctrTab.ToString();
                 txtContactNo_.Name = "txtContactNo" + ctrTab.ToString();
                 rtbMetodePembayaran.Name = "rtbMetodePembayaran" + ctrTab.ToString();
+                cbEkspedisi.Name = "cbEkspedisi" + ctrTab.ToString();
                 //txtNamaBarang.Name = "txtNamaBarang" + ctrTab.ToString();
                 listNamaBarang.Name = "listNamaBarang" + ctrTab.ToString();
                 txtTotHarga.Name = "txtTotHarga" + ctrTab.ToString();
@@ -209,8 +213,10 @@ namespace POS_Andy
                 txtCompanyName_.Size = new System.Drawing.Size(160, 50);
                 txtContactNo_.Location = new System.Drawing.Point(125, 147);
                 txtContactNo_.Size = new System.Drawing.Size(160, 50);
-                rtbMetodePembayaran.Location = new System.Drawing.Point(480, 50);
-                rtbMetodePembayaran.Size = new System.Drawing.Size(180, 60);
+                //rtbMetodePembayaran.Location = new System.Drawing.Point(480, 50);
+                //rtbMetodePembayaran.Size = new System.Drawing.Size(180, 60);
+                cbEkspedisi.Location = new System.Drawing.Point(480, 50);
+                cbEkspedisi.Size = new System.Drawing.Size(150, 60);
 
                 dtpPembayaran.Location = new System.Drawing.Point(480, 120);
                 dtpPembayaran.Size = new System.Drawing.Size(180, 60);
@@ -255,7 +261,7 @@ namespace POS_Andy
                 groupBoxDataPembeli[0].Controls.Add(lblTanggalPembayaran);
                 groupBoxDataPembeli[0].Controls.Add(txtCustomerName_);
                 groupBoxDataPembeli[0].Controls.Add(rtbAlamat_);
-                groupBoxDataPembeli[0].Controls.Add(rtbMetodePembayaran);
+                groupBoxDataPembeli[0].Controls.Add(cbEkspedisi);
                 groupBoxDataPembeli[0].Controls.Add(txtCompanyName_);
                 groupBoxDataPembeli[0].Controls.Add(txtContactNo_);
                 groupBoxDataPembeli[0].Controls.Add(dgv_invoice);
