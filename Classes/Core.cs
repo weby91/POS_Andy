@@ -325,6 +325,149 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        #region TambahInvoice
+        //public static string TambahInvoice(string invoice_no, string buyer_name, string buyer_address, string company_name
+        //                                , string buyer_contact_no, string payment_method, string item_name, string vendor_name
+        //                                , int is_TO, int is_DP, int is_Palet)
+        public static string TambahInvoice(string invoice_name, string buyer_name, string buyer_address, string company_name
+                                        , string buyer_contact_no, string payment_method, int purchase_total)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "INSERT                                             " +
+                                    "INTO ms_invoice                                       " +
+                                    "(invoice_name                                          " +
+                                    ",buyer_name                                          " +
+                                    ",buyer_address                                          " +
+                                    ",company_name                                        " +
+                                    ",buyer_contact_no                                         " +
+                                    ",payment_method                                           " +
+                                    ",purchase_total                                           " +
+                                    ",invoice_dt                                           " +
+                                    ",created_by                                           " +
+                                    ") VALUES                                           " +
+                                    "(@invoice_name                       " +
+                                    ",@buyer_name                                               " +
+                                    ",@buyer_address                                               " +
+                                    ",@company_name                                               " +
+                                    ",@buyer_contact_no                                               " +
+                                    ",@payment_method                                               " +
+                                    ",@purchase_total                                               " +
+                                    ",NOW()                                              " +
+                                    ",@superadmin                                               " +
+                                    ")                                               ";
+
+                cmd.Parameters.AddWithValue("@invoice_name", invoice_name);
+                cmd.Parameters.AddWithValue("@buyer_name", buyer_name);
+                cmd.Parameters.AddWithValue("@buyer_address", buyer_address);
+                cmd.Parameters.AddWithValue("@company_name", company_name);
+                cmd.Parameters.AddWithValue("@buyer_contact_no", buyer_contact_no);
+                cmd.Parameters.AddWithValue("@payment_method", payment_method);
+                cmd.Parameters.AddWithValue("@purchase_total", purchase_total);
+                //cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
+                //cmd.Parameters.AddWithValue("@category", category);
+                //cmd.Parameters.AddWithValue("@satuan", satuan);
+                //cmd.Parameters.AddWithValue("@isi", isi);
+                cmd.Parameters.AddWithValue("@superadmin", "andy");
+
+                cmd.ExecuteNonQuery();
+
+
+                cmd.CommandText = "select last_insert_id()";
+                int id = Convert.ToInt32(cmd.ExecuteScalar());
+                
+                
+
+                result = id.ToString();
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region TambahInvoiceDetail
+        public static string TambahInvoiceDetail(int invoice_id, string invoice_no, string item_name, string vendor_name, int item_total
+                                        , int is_TO, int is_DP, int is_Palet)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "INSERT                                             " +
+                                    "INTO ms_invoice_detail                                       " +
+                                    "(invoice_id                                          " +
+                                    ",invoice_name                                          " +
+                                    ",item_name                                          " +
+                                    ",vendor_name                                        " +
+                                    ",item_total                                        " +
+                                    ",is_TO                                         " +
+                                    ",is_DP                                           " +
+                                    ",is_Palet                                           " +
+                                    ",invoice_dt                                           " +
+                                    ",created_by                                           " +
+                                    ") VALUES                                           " +
+                                    "(@invoice_id                                               " +
+                                    ",@invoice_no                       " +
+                                    ",@item_name                                               " +
+                                    ",@vendor_name                                               " +
+                                    ",@item_total                                               " +
+                                    ",@is_TO                                               " +
+                                    ",@is_DP                                               " +
+                                    ",@is_Palet                                               " +
+                                    ",NOW()                                              " +
+                                    ",@superadmin                                               " +
+                                    ")                                               ";
+
+                cmd.Parameters.AddWithValue("@invoice_id", invoice_id);
+                cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
+                cmd.Parameters.AddWithValue("@item_name", item_name);
+                cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
+                cmd.Parameters.AddWithValue("@item_total", item_total);
+                cmd.Parameters.AddWithValue("@is_TO", is_TO);
+                cmd.Parameters.AddWithValue("@is_DP", is_DP);
+                cmd.Parameters.AddWithValue("@is_Palet", is_Palet);
+                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE ms_item " +
+                                    "SET stock = stock - @item_total " +
+                                    "WHERE item_name = @item_name " + Environment.NewLine +
+                                    "AND vendor_name = @vendor_name ";
+
+                cmd.ExecuteNonQuery();
+
+
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return result;
+        }
+        #endregion
+
         #region ImportProduk
         public static string ImportProduk(string item_name, int stock, int cost_price, int retail_price
                                         , int wholesale_price, int wholesale_number, string vendor_name
@@ -619,6 +762,38 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        #region ListEkspedisi
+        public static DataTable ListEkspedisi()
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT nama_ekspedisi " +
+                                    "FROM ms_ekspedisi WHERE is_deleted = 0 ORDER BY nama_ekspedisi                                       ";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error : " + ex.ToString();
+            }
+
+            return dt;
+        }
+        #endregion
+
         #region ListProduct
         public static DataTable ListProduct()
         {
@@ -758,6 +933,41 @@ namespace POS_Andy.Classes
             return dt;
         }
         #endregion
+
+        #region SelectInvoice
+        public static DataTable SelectInvoice()
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT invoice_id, invoice_name    " +
+                                    "FROM ms_invoice where DAY(invoice_dt) = DAY(NOW())                                " +
+                                    " AND MONTH(invoice_dt) = MONTH(NOW()) " +
+                                    " AND YEAR(invoice_dt) = YEAR(NOW()) ORDER BY invoice_dt DESC LIMIT 1";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return dt;
+        }
+        #endregion
+
 
     }
 }

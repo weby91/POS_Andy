@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddInvoice));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnDelTab = new System.Windows.Forms.Button();
             this.cbTabPages = new System.Windows.Forms.ComboBox();
@@ -44,7 +43,6 @@
             this.txtCompanyName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtContactNo = new System.Windows.Forms.TextBox();
-            this.btn_save = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +57,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(984, 589);
+            this.groupBox1.Size = new System.Drawing.Size(984, 646);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -92,7 +90,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btn_save);
             this.groupBox2.Controls.Add(this.tabControl1);
             this.groupBox2.Location = new System.Drawing.Point(16, 61);
             this.groupBox2.Name = "groupBox2";
@@ -106,7 +103,7 @@
             this.tabControl1.Location = new System.Drawing.Point(17, 29);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(918, 452);
+            this.tabControl1.Size = new System.Drawing.Size(918, 526);
             this.tabControl1.TabIndex = 3;
             // 
             // btnNewTab
@@ -180,24 +177,11 @@
             this.txtContactNo.Size = new System.Drawing.Size(100, 20);
             this.txtContactNo.TabIndex = 0;
             // 
-            // btn_save
-            // 
-            this.btn_save.Image = ((System.Drawing.Image)(resources.GetObject("btn_save.Image")));
-            this.btn_save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_save.Location = new System.Drawing.Point(878, 488);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(57, 34);
-            this.btn_save.TabIndex = 16;
-            this.btn_save.Text = "Save";
-            this.btn_save.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_save.UseVisualStyleBackColor = true;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
-            // 
             // frmAddInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 589);
+            this.ClientSize = new System.Drawing.Size(984, 646);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmAddInvoice";
             this.Text = "Form Tambah Invoice";
@@ -226,6 +210,5 @@
         private System.Windows.Forms.ComboBox cbTabPages;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnDelTab;
-        private System.Windows.Forms.Button btn_save;
     }
 }
