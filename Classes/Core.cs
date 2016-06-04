@@ -325,6 +325,78 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        #region TambahInvoice
+        public static string TambahInvoice(string item_name, int stock, int cost_price, int retail_price
+                                        , int wholesale_price, int wholesale_number, string vendor_name
+                                        , string category, string satuan, int isi)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "INSERT                                             " +
+                                    "INTO ms_item                                       " +
+                                    "(item_name                                          " +
+                                    ",stock                                          " +
+                                    ",cost_price                                          " +
+                                    ",retail_price                                        " +
+                                    ",wholesale_price                                         " +
+                                    ",wholesale_number                                           " +
+                                    ",vendor_name                                         " +
+                                    ",category                                          " +
+                                    ",satuan                                          " +
+                                    ",isi                                          " +
+                                    ",created_dt                                             " +
+                                    ",created_by                                            " +
+                                    ",last_modified_dt                                     " +
+                                    ",modified_by                                     " +
+                                    ") VALUES                                           " +
+                                    "(@in                                               " +
+                                    ",@stock                                               " +
+                                    ",@costPrice                                               " +
+                                    ",@rp                                               " +
+                                    ",@wp                                               " +
+                                    ",@wn                                               " +
+                                    ",@vendor_name                                               " +
+                                    ",@category                                               " +
+                                    ",@satuan                                               " +
+                                    ",@isi                                               " +
+                                    ",NOW()                                              " +
+                                    ",@superadmin                                               " +
+                                    ",NULL                                               " +
+                                    ",NULL                                              " +
+                                    ")                                               ";
+
+                cmd.Parameters.AddWithValue("@in", item_name);
+                cmd.Parameters.AddWithValue("@stock", stock);
+                cmd.Parameters.AddWithValue("@costPrice", cost_price);
+                cmd.Parameters.AddWithValue("@rp", retail_price);
+                cmd.Parameters.AddWithValue("@wp", wholesale_price);
+                cmd.Parameters.AddWithValue("@wn", wholesale_number);
+                cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
+                cmd.Parameters.AddWithValue("@category", category);
+                cmd.Parameters.AddWithValue("@satuan", satuan);
+                cmd.Parameters.AddWithValue("@isi", isi);
+                cmd.Parameters.AddWithValue("@superadmin", "andy");
+
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return result;
+        }
+        #endregion
+
         #region ImportProduk
         public static string ImportProduk(string item_name, int stock, int cost_price, int retail_price
                                         , int wholesale_price, int wholesale_number, string vendor_name
@@ -651,7 +723,6 @@ namespace POS_Andy.Classes
         }
         #endregion
 
-
         #region ListProduct
         public static DataTable ListProduct()
         {
@@ -791,6 +862,41 @@ namespace POS_Andy.Classes
             return dt;
         }
         #endregion
+
+        #region SelectInvoice
+        public static DataTable SelectInvoice()
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT invoice_id, invoice_name    " +
+                                    "FROM ms_invoice where DAY(invoice_dt) = DAY(NOW())                                " +
+                                    " AND MONTH(invoice_dt) = MONTH(NOW()) " +
+                                    " AND YEAR(invoice_dt) = YEAR(NOW()) ORDER BY invoice_dt DESC LIMIT 1";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return dt;
+        }
+        #endregion
+
 
     }
 }

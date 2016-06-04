@@ -853,7 +853,10 @@ namespace POS_Andy
         {
             try
             {
+                DataTable dtInvoice = new DataTable();
+                string invoiceName = "";
                 string alertMsg = "";
+
                 //Validation
                 if (txtNamaPembeli.Text.ToString() == "")
                     alertMsg = "Nama Pembeli harus diisi";
@@ -868,7 +871,8 @@ namespace POS_Andy
 
                 if (alertMsg == "")
                 {
-
+                    dtInvoice = Core.SelectInvoice();
+                    if(dtInvoice.Rows.Count > 0)
                 }
                 else
                 {
