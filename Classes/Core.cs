@@ -326,9 +326,9 @@ namespace POS_Andy.Classes
         #endregion
 
         #region TambahInvoice
-        public static string TambahInvoice(string item_name, int stock, int cost_price, int retail_price
-                                        , int wholesale_price, int wholesale_number, string vendor_name
-                                        , string category, string satuan, int isi)
+        public static string TambahInvoice(int invoice_no, string buyer_name, string buyer_address, string company_name
+                                        , string buyer_contact_no, string payment_method, string item_name, string vendor_name
+                                        , int is_TO, int is_DP, int is_Palet)
         {
             string result = "";
             string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
@@ -340,21 +340,13 @@ namespace POS_Andy.Classes
                 con.Open();
 
                 cmd.CommandText = "INSERT                                             " +
-                                    "INTO ms_item                                       " +
-                                    "(item_name                                          " +
-                                    ",stock                                          " +
-                                    ",cost_price                                          " +
-                                    ",retail_price                                        " +
-                                    ",wholesale_price                                         " +
-                                    ",wholesale_number                                           " +
-                                    ",vendor_name                                         " +
-                                    ",category                                          " +
-                                    ",satuan                                          " +
-                                    ",isi                                          " +
-                                    ",created_dt                                             " +
-                                    ",created_by                                            " +
-                                    ",last_modified_dt                                     " +
-                                    ",modified_by                                     " +
+                                    "INTO ms_invoice                                       " +
+                                    "(invoice_name                                          " +
+                                    ",buyer_name                                          " +
+                                    ",buyer_address                                          " +
+                                    ",company_name                                        " +
+                                    ",buyer_contact_no                                         " +
+                                    ",payment_method                                           " +
                                     ") VALUES                                           " +
                                     "(@in                                               " +
                                     ",@stock                                               " +
@@ -372,16 +364,16 @@ namespace POS_Andy.Classes
                                     ",NULL                                              " +
                                     ")                                               ";
 
-                cmd.Parameters.AddWithValue("@in", item_name);
-                cmd.Parameters.AddWithValue("@stock", stock);
-                cmd.Parameters.AddWithValue("@costPrice", cost_price);
-                cmd.Parameters.AddWithValue("@rp", retail_price);
-                cmd.Parameters.AddWithValue("@wp", wholesale_price);
-                cmd.Parameters.AddWithValue("@wn", wholesale_number);
-                cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
-                cmd.Parameters.AddWithValue("@category", category);
-                cmd.Parameters.AddWithValue("@satuan", satuan);
-                cmd.Parameters.AddWithValue("@isi", isi);
+                cmd.Parameters.AddWithValue("@invoice_no", invoice_no);
+                cmd.Parameters.AddWithValue("@buyer_name", buyer_name);
+                cmd.Parameters.AddWithValue("@buyer_address", buyer_address);
+                cmd.Parameters.AddWithValue("@company_name", company_name);
+                cmd.Parameters.AddWithValue("@buyer_contact_no", buyer_contact_no);
+                cmd.Parameters.AddWithValue("@payment_method", payment_method);
+                //cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
+                //cmd.Parameters.AddWithValue("@category", category);
+                //cmd.Parameters.AddWithValue("@satuan", satuan);
+                //cmd.Parameters.AddWithValue("@isi", isi);
                 cmd.Parameters.AddWithValue("@superadmin", "andy");
 
                 cmd.ExecuteNonQuery();
