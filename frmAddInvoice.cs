@@ -864,10 +864,10 @@ namespace POS_Andy
             try
             {
                 //delete later - Autofill textbox
-                txtNamaPembeli.Text = "Johny";
-                rtbAlamatPembeli.Text = "Jl. Pancasila No 5";
-                txtCompanyName.Text = "PT. Mitrausaha Group";
-                txtContactNo.Text = "0812910231";
+                //txtNamaPembeli.Text = "Johny";
+                //rtbAlamatPembeli.Text = "Jl. Pancasila No 5";
+                //txtCompanyName.Text = "PT. Mitrausaha Group";
+                //txtContactNo.Text = "0812910231";
                 //
 
                 DataTable dtInvoice = new DataTable();
@@ -1006,7 +1006,16 @@ namespace POS_Andy
                         }
 
                         if (alertMsg == "")
+                        {
                             MessageBox.Show("Proses Pembuatan Invoice berhasil");
+                            dgv_invoice.Rows.Clear();
+                            dgv_invoice.DataSource = null;
+                            txtNamaPembeli.Text = "";
+                            txtTotHarga.Text = "";
+                            txtCompanyName.Text = "";
+                            txtContactNo.Text = "";
+                            rtbAlamatPembeli.Text = "";
+                        }
                         else
                             MessageBox.Show("Error : Proses Pembuatan Invoice gagal");
                     }
