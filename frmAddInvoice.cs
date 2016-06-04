@@ -486,7 +486,10 @@ namespace POS_Andy
 
                 for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
                 {
-                    subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                    if (dgv_invoice.Rows[i].Cells[11].Value.ToString() != "")
+                        subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                    else
+                        subTotal += 0;
                 }
 
                 if (dgv_invoice.Rows.Count == 0)
@@ -771,7 +774,10 @@ namespace POS_Andy
 
                 for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
                 {
-                    subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                    if (dgv_invoice.Rows[i].Cells[11].Value.ToString() != "")
+                        subTotal += Convert.ToInt32(dgv_invoice.Rows[i].Cells[11].Value);
+                    else
+                        subTotal += 0;
                 }
 
                 if (dgv_invoice.Rows.Count == 0)
