@@ -16,16 +16,28 @@ namespace POS_Andy
         {
             InitializeComponent();
             if (invoice_name != "")
-                MessageBox.Show(invoice_name);
+                txtInvoiceName.Text = invoice_name;
         }
 
         private void frmRptInvoice_Load(object sender, EventArgs e)
         {
-            //rptInvoice invoiceReport = new rptInvoice();
+            rptInvoice invoiceReport = new rptInvoice();
             //crystalReportViewer1.ReportSource = invoiceReport;
 
             CenterToScreen();
-            WindowState = FormWindowState.Maximized;            
+            WindowState = FormWindowState.Maximized;
+
+            try
+            {
+                if(txtInvoiceName.Text != "")
+                {
+                    invoiceReport.SetParameterValue("invoice_name_param", txtInvoiceName.Text);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
 
         }
     }

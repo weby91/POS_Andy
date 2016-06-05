@@ -130,16 +130,16 @@ namespace POS_Andy
                         dgv.Columns["Total Pembelian"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
                         dgv.Columns["Total Pembelian"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-                        DataGridViewButtonColumn btnColumn = new DataGridViewButtonColumn();
+                        DataGridViewButtonColumn btnColumnDetil = new DataGridViewButtonColumn();
                         DataGridViewColumnCollection dgvColumns = dgv.Columns;
 
                         if (!dgvColumns.Contains("Detil"))
                         {
-                            btnColumn.Name = "Detil";
-                            btnColumn.HeaderText = "";
-                            btnColumn.Text = "Detil";
-                            btnColumn.UseColumnTextForButtonValue = true;
-                            dgv.Columns.Insert(dtCloned.Columns.Count, btnColumn);
+                            btnColumnDetil.Name = "Detil";
+                            btnColumnDetil.HeaderText = "";
+                            btnColumnDetil.Text = "Detil";
+                            btnColumnDetil.UseColumnTextForButtonValue = true;
+                            dgv.Columns.Insert(dtCloned.Columns.Count, btnColumnDetil);
                         }
 
                         dgv.CellContentClick += new DataGridViewCellEventHandler(dgv_CellClick);
@@ -197,8 +197,8 @@ namespace POS_Andy
                 if (dgv.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                     e.RowIndex >= 0)
                 {
-                    frmRptInvoice frm = new frmRptInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
-                    frm.Show();
+                    //frmRptInvoice frm = new frmRptInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
+                    //frm.Show();
                 }
 
                 //delete row from persisted storage
