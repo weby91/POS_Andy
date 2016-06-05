@@ -21,6 +21,10 @@ namespace POS_Andy
         {
             //rptInvoice invoiceReport = new rptInvoice();
             //crystalReportViewer1.ReportSource = invoiceReport;
+
+            CenterToScreen();
+            WindowState = FormWindowState.Maximized;            
+
         }
     }
 }
