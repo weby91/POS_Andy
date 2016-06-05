@@ -127,6 +127,23 @@ namespace POS_Andy
                         }
 
                         dgv.DataSource = dtCloned;
+                        dgv.Columns["Total Pembelian"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                        dgv.Columns["Total Pembelian"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+                        DataGridViewButtonColumn btnColumn = new DataGridViewButtonColumn();
+                        DataGridViewColumnCollection dgvColumns = dgv.Columns;
+
+                        if (!dgvColumns.Contains("Detil"))
+                        {
+                            btnColumn.Name = "Detil";
+                            btnColumn.HeaderText = "";
+                            btnColumn.Text = "Detil";
+                            btnColumn.UseColumnTextForButtonValue = true;
+                            dgv.Columns.Insert(dtCloned.Columns.Count, btnColumn);
+                        }
+
+                        dgv.CellContentClick += new DataGridViewCellEventHandler(dgv_invoice_CellClick);
+
                     }
 
                     dgv.Columns["invoice_id"].Visible = false;
@@ -143,6 +160,54 @@ namespace POS_Andy
                 dtCloned.Dispose();
             }
             
+        }
+
+        private void dgv_invoice_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv_invoice = (DataGridView)sender;
+            {
+                //DataGridViewRow delrow = dgv_invoice.Rows[e.RowIndex];
+                //if (delrow.Selected == true)
+                //{
+                //    dgv_invoice.Rows.RemoveAt(e.RowIndex);
+                //}
+                //foreach (DataGridViewRow item in dgv_invoice.SelectedRows)
+                //{
+                //    for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                //    {
+                //        if (Convert.ToBoolean(dgv_invoice.Rows[i]
+                //                              .Cells[e.ColumnIndex].Value) == true)
+                //        {
+                //            dgv_invoice.Rows.RemoveAt(i);
+                //        }
+                //    }
+                //}
+                //if (e.ColumnIndex == 0 || e.ColumnIndex == 1)
+                //{
+                //    if(e.RowIndex >= 0)
+                //    {
+                //        for(int i = 0; i < dgv_invoice.Rows.Count; i++)
+                //        {
+                //            dgv_invoice.Rows[i].Cells[0].ReadOnly = true;
+                //            dgv_invoice.Rows[i].Cells[1].ReadOnly = true;
+                //        }                        
+                //    }                    
+                //}
+
+                if (dgv_invoice.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                    e.RowIndex >= 0)
+                {
+                    MessageBox.Show("a");
+                }
+
+                //delete row from persisted storage
+
+                //rebind data to persisted storage or remove row directly:
+                //if (delGridview == true)
+                //    dgv_invoice.Rows.RemoveAt(cRow);
+                //else
+                //    delGridview = true;
+            }
         }
     }
 }
