@@ -142,7 +142,7 @@ namespace POS_Andy
                             dgv.Columns.Insert(dtCloned.Columns.Count, btnColumn);
                         }
 
-                        dgv.CellContentClick += new DataGridViewCellEventHandler(dgv_invoice_CellClick);
+                        dgv.CellContentClick += new DataGridViewCellEventHandler(dgv_CellClick);
 
                     }
 
@@ -162,9 +162,9 @@ namespace POS_Andy
             
         }
 
-        private void dgv_invoice_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridView dgv_invoice = (DataGridView)sender;
+            DataGridView dgv = (DataGridView)sender;
             {
                 //DataGridViewRow delrow = dgv_invoice.Rows[e.RowIndex];
                 //if (delrow.Selected == true)
@@ -194,10 +194,11 @@ namespace POS_Andy
                 //    }                    
                 //}
 
-                if (dgv_invoice.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                if (dgv.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                     e.RowIndex >= 0)
                 {
-                    MessageBox.Show("a");
+                    frmRptInvoice frm = new frmRptInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
+                    frm.Show();
                 }
 
                 //delete row from persisted storage

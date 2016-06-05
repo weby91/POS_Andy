@@ -12,9 +12,11 @@ namespace POS_Andy
 {
     public partial class frmRptInvoice : Form
     {
-        public frmRptInvoice()
+        public frmRptInvoice(string invoice_name)
         {
             InitializeComponent();
+            if (invoice_name != "")
+                MessageBox.Show(invoice_name);
         }
 
         private void frmRptInvoice_Load(object sender, EventArgs e)
