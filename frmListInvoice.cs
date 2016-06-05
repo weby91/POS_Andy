@@ -197,8 +197,8 @@ namespace POS_Andy
                 if (dgv.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                     e.RowIndex >= 0)
                 {
-                    //frmRptInvoice frm = new frmRptInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
-                    //frm.Show();
+                    frmDetailInvoice frm = new frmDetailInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
+                    frm.Show();
                 }
 
                 //delete row from persisted storage
