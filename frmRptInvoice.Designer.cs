@@ -28,22 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.rptInvoice1 = new POS_Andy.rptInvoice();
             this.label1 = new System.Windows.Forms.Label();
             this.txtInvoiceName = new System.Windows.Forms.TextBox();
+            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.SuspendLayout();
-            // 
-            // crystalReportViewer1
-            // 
-            this.crystalReportViewer1.ActiveViewIndex = 0;
-            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.crystalReportViewer1.Location = new System.Drawing.Point(159, 78);
-            this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.ReportSource = this.rptInvoice1;
-            this.crystalReportViewer1.Size = new System.Drawing.Size(1025, 605);
-            this.crystalReportViewer1.TabIndex = 0;
             // 
             // label1
             // 
@@ -64,6 +53,17 @@
             this.txtInvoiceName.Size = new System.Drawing.Size(334, 44);
             this.txtInvoiceName.TabIndex = 2;
             // 
+            // crystalReportViewer1
+            // 
+            this.crystalReportViewer1.ActiveViewIndex = 0;
+            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crystalReportViewer1.Location = new System.Drawing.Point(159, 78);
+            this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.ReportSource = this.rptInvoice1;
+            this.crystalReportViewer1.Size = new System.Drawing.Size(1025, 605);
+            this.crystalReportViewer1.TabIndex = 0;
+            // 
             // frmRptInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -81,10 +81,9 @@
         }
 
         #endregion
-
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
         private rptInvoice rptInvoice1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtInvoiceName;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
     }
 }

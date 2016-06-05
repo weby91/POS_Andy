@@ -78,6 +78,9 @@
             this.lblDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblTimer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.invoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tambahInvoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listInvoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip1.SuspendLayout();
             this.ToolStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
@@ -135,7 +138,8 @@
             this.ProductToolStripMenuItem,
             this.vendorToolStripMenuItem,
             this.kategoriToolStripMenuItem,
-            this.satuanToolStripMenuItem});
+            this.satuanToolStripMenuItem,
+            this.invoiceToolStripMenuItem});
             this.RecordToolStripMenuItem.Name = "RecordToolStripMenuItem";
             this.RecordToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.RecordToolStripMenuItem.Text = "Master";
@@ -143,7 +147,7 @@
             // StaffToolStripMenuItem
             // 
             this.StaffToolStripMenuItem.Name = "StaffToolStripMenuItem";
-            this.StaffToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.StaffToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.StaffToolStripMenuItem.Text = "Staff";
             this.StaffToolStripMenuItem.Click += new System.EventHandler(this.StaffToolStripMenuItem_Click);
             // 
@@ -156,39 +160,39 @@
             this.hapusToolStripMenuItem,
             this.listProductToolStripMenuItem});
             this.ProductToolStripMenuItem.Name = "ProductToolStripMenuItem";
-            this.ProductToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ProductToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.ProductToolStripMenuItem.Text = "Product";
             this.ProductToolStripMenuItem.Click += new System.EventHandler(this.ProductToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.importToolStripMenuItem.Text = "Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // tambahToolStripMenuItem
             // 
             this.tambahToolStripMenuItem.Name = "tambahToolStripMenuItem";
-            this.tambahToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tambahToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.tambahToolStripMenuItem.Text = "Tambah";
             // 
             // ubahToolStripMenuItem
             // 
             this.ubahToolStripMenuItem.Name = "ubahToolStripMenuItem";
-            this.ubahToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ubahToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.ubahToolStripMenuItem.Text = "Ubah";
             // 
             // hapusToolStripMenuItem
             // 
             this.hapusToolStripMenuItem.Name = "hapusToolStripMenuItem";
-            this.hapusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hapusToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.hapusToolStripMenuItem.Text = "Hapus";
             // 
             // listProductToolStripMenuItem
             // 
             this.listProductToolStripMenuItem.Name = "listProductToolStripMenuItem";
-            this.listProductToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.listProductToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.listProductToolStripMenuItem.Text = "List Product";
             this.listProductToolStripMenuItem.Click += new System.EventHandler(this.listProductToolStripMenuItem_Click);
             // 
@@ -198,7 +202,7 @@
             this.tambahVendorToolStripMenuItem,
             this.listVendorToolStripMenuItem});
             this.vendorToolStripMenuItem.Name = "vendorToolStripMenuItem";
-            this.vendorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.vendorToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.vendorToolStripMenuItem.Text = "Vendor";
             // 
             // tambahVendorToolStripMenuItem
@@ -221,7 +225,7 @@
             this.tambahKategoriToolStripMenuItem,
             this.listKategoriToolStripMenuItem});
             this.kategoriToolStripMenuItem.Name = "kategoriToolStripMenuItem";
-            this.kategoriToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.kategoriToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.kategoriToolStripMenuItem.Text = "Kategori";
             // 
             // tambahKategoriToolStripMenuItem
@@ -243,7 +247,7 @@
             this.listSatuanToolStripMenuItem,
             this.listSatuanToolStripMenuItem1});
             this.satuanToolStripMenuItem.Name = "satuanToolStripMenuItem";
-            this.satuanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.satuanToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.satuanToolStripMenuItem.Text = "Satuan";
             // 
             // listSatuanToolStripMenuItem
@@ -271,8 +275,9 @@
             // POSToolStripMenuItem
             // 
             this.POSToolStripMenuItem.Name = "POSToolStripMenuItem";
-            this.POSToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.POSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.POSToolStripMenuItem.Text = "POS";
+            this.POSToolStripMenuItem.Click += new System.EventHandler(this.POSToolStripMenuItem_Click);
             // 
             // ReportToolStripMenuItem
             // 
@@ -428,6 +433,7 @@
             this.tstrip_pos.Size = new System.Drawing.Size(70, 72);
             this.tstrip_pos.Text = "POS";
             this.tstrip_pos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tstrip_pos.Click += new System.EventHandler(this.tstrip_pos_Click);
             // 
             // tstrip_daily_sales
             // 
@@ -530,6 +536,29 @@
             this.lblTimer.Size = new System.Drawing.Size(71, 17);
             this.lblTimer.Text = "hh:mm:sss";
             // 
+            // invoiceToolStripMenuItem
+            // 
+            this.invoiceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tambahInvoiceToolStripMenuItem,
+            this.listInvoiceToolStripMenuItem});
+            this.invoiceToolStripMenuItem.Name = "invoiceToolStripMenuItem";
+            this.invoiceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.invoiceToolStripMenuItem.Text = "Invoice";
+            // 
+            // tambahInvoiceToolStripMenuItem
+            // 
+            this.tambahInvoiceToolStripMenuItem.Name = "tambahInvoiceToolStripMenuItem";
+            this.tambahInvoiceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.tambahInvoiceToolStripMenuItem.Text = "Tambah Invoice";
+            this.tambahInvoiceToolStripMenuItem.Click += new System.EventHandler(this.tambahInvoiceToolStripMenuItem_Click);
+            // 
+            // listInvoiceToolStripMenuItem
+            // 
+            this.listInvoiceToolStripMenuItem.Name = "listInvoiceToolStripMenuItem";
+            this.listInvoiceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.listInvoiceToolStripMenuItem.Text = "List Invoice";
+            this.listInvoiceToolStripMenuItem.Click += new System.EventHandler(this.listInvoiceToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -604,5 +633,8 @@
         private System.Windows.Forms.ToolStripMenuItem satuanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listSatuanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listSatuanToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem invoiceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tambahInvoiceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listInvoiceToolStripMenuItem;
     }
 }

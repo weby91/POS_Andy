@@ -93,6 +93,13 @@ namespace POS_Andy
                     if(dgv.Rows[e.RowIndex].Cells["Alasan Void"].Value.ToString().Trim() != "")
                     {
                         result = Core.UpdateInvoice_VOID(invoice_name, item_name, void_remarks, stock);
+                        if (result == "")
+                        {
+                            MessageBox.Show("Void berhasil");
+                            this.Close();
+                        }
+                        else
+                            MessageBox.Show("Error");
                     }
                     else
                     {

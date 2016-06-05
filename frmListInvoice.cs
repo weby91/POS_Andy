@@ -131,15 +131,23 @@ namespace POS_Andy
                         dgv.Columns["Total Pembelian"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
                         DataGridViewButtonColumn btnColumnDetil = new DataGridViewButtonColumn();
+                        DataGridViewButtonColumn btnColumnVoid = new DataGridViewButtonColumn();
                         DataGridViewColumnCollection dgvColumns = dgv.Columns;
 
                         if (!dgvColumns.Contains("Detil"))
                         {
                             btnColumnDetil.Name = "Detil";
-                            btnColumnDetil.HeaderText = "";
+                            btnColumnDetil.HeaderText = "Detil";
                             btnColumnDetil.Text = "Detil";
                             btnColumnDetil.UseColumnTextForButtonValue = true;
+
+                            btnColumnVoid.Name = "Void";
+                            btnColumnVoid.HeaderText = "Void";
+                            btnColumnVoid.Text = "Void";
+                            btnColumnVoid.UseColumnTextForButtonValue = true;
                             dgv.Columns.Insert(dtCloned.Columns.Count, btnColumnDetil);
+                            dgv.Columns.Insert(dtCloned.Columns.Count, btnColumnVoid);
+
                         }
 
                         dgv.CellContentClick += new DataGridViewCellEventHandler(dgv_CellClick);
@@ -166,39 +174,21 @@ namespace POS_Andy
         {
             DataGridView dgv = (DataGridView)sender;
             {
-                //DataGridViewRow delrow = dgv_invoice.Rows[e.RowIndex];
-                //if (delrow.Selected == true)
-                //{
-                //    dgv_invoice.Rows.RemoveAt(e.RowIndex);
-                //}
-                //foreach (DataGridViewRow item in dgv_invoice.SelectedRows)
-                //{
-                //    for (int i = 0; i < dgv_invoice.Rows.Count; i++)
-                //    {
-                //        if (Convert.ToBoolean(dgv_invoice.Rows[i]
-                //                              .Cells[e.ColumnIndex].Value) == true)
-                //        {
-                //            dgv_invoice.Rows.RemoveAt(i);
-                //        }
-                //    }
-                //}
-                //if (e.ColumnIndex == 0 || e.ColumnIndex == 1)
-                //{
-                //    if(e.RowIndex >= 0)
-                //    {
-                //        for(int i = 0; i < dgv_invoice.Rows.Count; i++)
-                //        {
-                //            dgv_invoice.Rows[i].Cells[0].ReadOnly = true;
-                //            dgv_invoice.Rows[i].Cells[1].ReadOnly = true;
-                //        }                        
-                //    }                    
-                //}
 
                 if (dgv.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                     e.RowIndex >= 0)
                 {
-                    frmDetailInvoice frm = new frmDetailInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
-                    frm.Show();
+                    if(dgv.Columns[e.ColumnIndex].HeaderText == "Detil")
+                    {
+                        frmRptInvoice frm = new frmRptInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
+                        frm.Show();
+                    }
+                    else if(dgv.Columns[e.ColumnIndex].HeaderText == "Void")
+                    {
+                        frmDetailInvoice frm = new frmDetailInvoice(dgv.Rows[e.RowIndex].Cells["Invoice Name"].Value.ToString());
+                        frm.Show();
+                    }
+                    
                 }
 
                 //delete row from persisted storage
