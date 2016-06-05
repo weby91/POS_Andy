@@ -51,6 +51,20 @@ namespace POS_Andy
                     {
                         invoiceReport.SetParameterValue("invoice_name_param", invoice_name);
                         invoiceReport.SetParameterValue("invoice_date_param", dt.Rows[0]["invoice_dt"].ToString());
+
+                        invoiceReport.SetParameterValue("buyer_name_param", dtMaster.Rows[0]["Nama Pembeli"].ToString());
+                        invoiceReport.SetParameterValue("company_name_param", dtMaster.Rows[0]["company_name"].ToString());
+                        invoiceReport.SetParameterValue("buyer_address_param", dtMaster.Rows[0]["buyer_address"].ToString());
+                        invoiceReport.SetParameterValue("buyer_contact_no_param", dtMaster.Rows[0]["buyer_contact_no"].ToString());
+                        invoiceReport.SetParameterValue("payment_method_param", dtMaster.Rows[0]["payment_method"].ToString());
+                        invoiceReport.SetParameterValue("purchase_total_param", dtMaster.Rows[0]["Total Pembelian"].ToString());
+
+
+                        invoiceReport.SetParameterValue("item_name_param", dt.Rows[0]["Nama Barang"].ToString());
+                        invoiceReport.SetParameterValue("jumlah_barang_param", dt.Rows[0]["Total Barang"].ToString());
+
+
+
                     }
 
 
