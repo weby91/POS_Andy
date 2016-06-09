@@ -86,6 +86,10 @@ namespace POS_Andy
                 Label lblNamaVendor = new Label();
                 Label lblNamaBarang = new Label();
                 Label lblTotal = new Label();
+                Label lblDP = new Label();
+                Label lblTO = new Label();
+                Label lblPalet = new Label();
+
 
                 TextBox txtCustomerName_ = new TextBox();
                 RichTextBox rtbAlamat_ = new RichTextBox();
@@ -100,6 +104,11 @@ namespace POS_Andy
                 txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
                 txtTotHarga.ReadOnly = true;
                 txtTotHarga.TextAlign = HorizontalAlignment.Right;
+
+                TextBox txtDP = new TextBox();
+                TextBox txtTO = new TextBox();
+                TextBox txtPalet = new TextBox();
+
 
                 lblTotal.Font = new Font(lblTotal.Font.FontFamily, 24);
                 lblTotal.TextAlign = ContentAlignment.MiddleRight;
@@ -154,6 +163,10 @@ namespace POS_Andy
                 lblNamaVendor.Name = "lblNamaVendor" + ctrTab.ToString();
                 lblNamaBarang.Name = "lblNamaBarang" + ctrTab.ToString();
                 lblTotal.Name = "lblTotal" + ctrTab.ToString();
+                lblDP.Name = "lblDP" + ctrTab.ToString();
+                lblTO.Name = "lblTO" + ctrTab.ToString();
+                lblPalet.Name = "lblPalet" + ctrTab.ToString();
+
 
                 btnAdd.Name = "btnAdd" + ctrTab.ToString();
                 btnClear.Name = "btnClear" + ctrTab.ToString();
@@ -170,7 +183,10 @@ namespace POS_Andy
                 chkDP.Name = "chkDP" + ctrTab.ToString();
                 chkPalet.Name = "chkPalet" + ctrTab.ToString();
                 chkTitipOngkos.Name = "chkTitipOngkos" + ctrTab.ToString();
-
+                txtDP.Name = "txtDP" + ctrTab.ToString();
+                txtTO.Name = "txtTO" + ctrTab.ToString();
+                txtPalet.Name = "txtPalet" + ctrTab.ToString();
+                
                 btnSave.Name = "btnSave" + ctrTab.ToString();
                 btnSave.Text = "Proses";
 
@@ -199,6 +215,9 @@ namespace POS_Andy
                 chkPalet.Text = "Palet";
                 chkTitipOngkos.Text = "Titip Ongkos";
                 lblTotal.Text = "Total";
+                lblDP.Text = "DP";
+                lblTO.Text = "TO";
+                lblPalet.Text = "Palet";
 
                 dtpPembayaran.Format = DateTimePickerFormat.Custom;
                 dtpPembayaran.CustomFormat = "dd-MM-yyyy";
@@ -242,6 +261,16 @@ namespace POS_Andy
                 chkPalet.Size = new System.Drawing.Size(70, 40);
                 chkTitipOngkos.Location = new System.Drawing.Point(620, 110);
                 chkTitipOngkos.Size = new System.Drawing.Size(100, 40);
+
+                lblDP.Location = new System.Drawing.Point(680, 50);
+                lblTO.Location = new System.Drawing.Point(680, 80);
+                lblPalet.Location = new System.Drawing.Point(680, 110);
+
+                txtDP.Location = new System.Drawing.Point(730, 50);
+                txtTO.Location = new System.Drawing.Point(730, 80);
+                txtPalet.Location = new System.Drawing.Point(730, 110);
+
+
                 //chkDP.Size = new System.Drawing.Size(150, 60);
 
                 //cbVendorName.Size = new System.Drawing.Size(250, 20);
@@ -268,10 +297,18 @@ namespace POS_Andy
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
 
+                groupBoxDataPembeli[0].Controls.Add(txtDP);
+                groupBoxDataPembeli[0].Controls.Add(txtTO);
+                groupBoxDataPembeli[0].Controls.Add(txtPalet);
+
+                groupBoxDataPembeli[0].Controls.Add(lblDP);
+                groupBoxDataPembeli[0].Controls.Add(lblTO);
+                groupBoxDataPembeli[0].Controls.Add(lblPalet);
+
                 groupBoxDataPembeli[0].Controls.Add(lblTotal);
-                groupBoxDataPembeli[0].Controls.Add(chkDP);
-                groupBoxDataPembeli[0].Controls.Add(chkPalet);
-                groupBoxDataPembeli[0].Controls.Add(chkTitipOngkos);
+                //groupBoxDataPembeli[0].Controls.Add(chkDP);
+                //groupBoxDataPembeli[0].Controls.Add(chkPalet);
+                //groupBoxDataPembeli[0].Controls.Add(chkTitipOngkos);
                 groupBoxDataPembeli[0].Controls.Add(listNamaBarang);
                 groupBoxDataPembeli[0].Controls.Add(btnClear);
                 groupBoxDataPembeli[0].Controls.Add(btnSave);
@@ -335,7 +372,7 @@ namespace POS_Andy
                     btnSave_Click(sender, e, dgv_invoice, txtCustomerName_, rtbAlamat_
                               , txtCompanyName_, txtContactNo_
                               , cbEkspedisi, dtpPembayaran
-                              , chkDP, chkPalet, chkTitipOngkos, txtTotHarga);};
+                              , txtDP, txtPalet, txtTO, txtTotHarga);};
 
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
                 dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtTotHarga));
@@ -859,7 +896,7 @@ namespace POS_Andy
 
         private void btnSave_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, TextBox txtNamaPembeli, RichTextBox rtbAlamatPembeli
                                     ,TextBox txtCompanyName, TextBox txtContactNo, ComboBox payment_method, DateTimePicker invoice_dt
-                                    ,CheckBox chkDP, CheckBox chkPalet, CheckBox chkTO, TextBox txtTotHarga)
+                                    ,TextBox txtDP, TextBox txtTO, TextBox txtPalet, TextBox txtTotHarga)
         {
             try
             {
