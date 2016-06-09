@@ -373,7 +373,7 @@ namespace POS_Andy
                     btnSave_Click(sender, e, dgv_invoice, txtCustomerName_, rtbAlamat_
                               , txtCompanyName_, txtContactNo_
                               , cbEkspedisi, dtpPembayaran
-                              , txtDP, txtPalet, txtTO, txtTotHarga);};
+                              , txtDP, txtTO, txtPalet, txtTotHarga, listNamaBarang);};
 
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
                 dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtTotHarga));
@@ -897,7 +897,8 @@ namespace POS_Andy
 
         private void btnSave_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, TextBox txtNamaPembeli, RichTextBox rtbAlamatPembeli
                                     ,TextBox txtCompanyName, TextBox txtContactNo, ComboBox payment_method, DateTimePicker invoice_dt
-                                    ,TextBox txtDP, TextBox txtTO, TextBox txtPalet, TextBox txtTotHarga)
+                                    ,TextBox txtDP, TextBox txtTO, TextBox txtPalet, TextBox txtTotHarga
+                                    ,AutoCompleteTextbox listNamaBarang)
         {
             try
             {
@@ -927,15 +928,16 @@ namespace POS_Andy
                 year = thisDay.Year.ToString();
 
                 //Validation
-                if (txtNamaPembeli.Text.ToString() == "")
-                    alertMsg = "Nama Pembeli harus diisi";
-                else if (rtbAlamatPembeli.Text.ToString() == "")
-                    alertMsg = "Alamat Pembeli harus diisi";
-                else if (txtContactNo.Text.ToString() == "")
-                    alertMsg = "No. Telp/HP harus diisi";
-                else if (invoice_dt.Text.ToString() == "")
-                    alertMsg = "Tanggal Pembayaran harus diisi";
-                else if (dgv_invoice.Rows.Count == 0)
+                // wb 20160609 - Andi request buat hilangin validasi di bawah
+                //if (txtNamaPembeli.Text.ToString() == "")
+                //    alertMsg = "Nama Pembeli harus diisi";
+                //else if (rtbAlamatPembeli.Text.ToString() == "")
+                //    alertMsg = "Alamat Pembeli harus diisi";
+                //else if (txtContactNo.Text.ToString() == "")
+                //    alertMsg = "No. Telp/HP harus diisi";
+                //else if (invoice_dt.Text.ToString() == "")
+                //    alertMsg = "Tanggal Pembayaran harus diisi";
+                if (dgv_invoice.Rows.Count == 0)
                     alertMsg = "Silahkan pilih barang yang ingin dibeli";
 
                 for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
@@ -1023,62 +1025,75 @@ namespace POS_Andy
                         string item_name;
                         string vendor_name;
                         int item_total;
-                        int isTO;
-                        int isDP;
-                        int isPalet;
+                        int isTO = 0;
+                        int isDP = 0;
+                        int isPalet = 0;
 
-                        if(txtTO.Text != "")
+                        if(txtTO.Text != "" && txtTO.Text != "0")
                         {
                             if (Regex.IsMatch(txtTO.Text, @"^\d+$") == true)
                                 isTO = int.Parse(txtTO.Text);
                             else
                                 alertMsg = "Field TO (Titip Ongkos) formatnya harus angka";
                         }
-                        if (txtDP.Text != "")
+                        if (txtDP.Text != "" && txtDP.Text != "0")
                         {
                             if (Regex.IsMatch(txtDP.Text, @"^\d+$") == true)
                                 isDP = int.Parse(txtDP.Text);
                             else
                                 alertMsg = "Field DP formatnya harus angka";
                         }
-                        if (txtPalet.Text != "")
+                        if (txtPalet.Text != "" && txtPalet.Text != "0")
                         {
                             if (Regex.IsMatch(txtPalet.Text, @"^\d+$") == true)
                                 isPalet = int.Parse(txtPalet.Text);
                             else
-                                alertMsg = "Field DP formatnya harus angka";
+                                alertMsg = "Field Palet formatnya harus angka";
                         }
 
-
-                        isTO = chkTO.Checked == true ? 1 : 0;
-                        isDP = chkDP.Checked == true ? 1 : 0;
-                        isPalet = chkPalet.Checked == true ? 1 : 0;
-
-                        for (int i = 0; i < dgv_invoice.Rows.Count; i++)
-                        {
-                            item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
-                            vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
-                            item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
-
-                            string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), "INV" + year + month + day + nextInvoiceNo
-                                                        , item_name, vendor_name, item_total, isTO, isDP, isPalet);
-
-                            alertMsg = insertInvoiceDetail;
-                        }
+                        //isTO = chkTO.Checked == true ? 1 : 0;
+                        //isDP = chkDP.Checked == true ? 1 : 0;
+                        //isPalet = chkPalet.Checked == true ? 1 : 0;
 
                         if (alertMsg == "")
                         {
-                            MessageBox.Show("Proses Pembuatan Invoice berhasil");
-                            dgv_invoice.Rows.Clear();
-                            dgv_invoice.DataSource = null;
-                            txtNamaPembeli.Text = "";
-                            txtTotHarga.Text = "";
-                            txtCompanyName.Text = "";
-                            txtContactNo.Text = "";
-                            rtbAlamatPembeli.Text = "";
+                            for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                            {
+                                item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
+                                vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
+                                item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
+
+                                string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), "INV" + year + month + day + nextInvoiceNo
+                                                            , item_name, vendor_name, item_total, isTO, isDP, isPalet);
+
+                                alertMsg = insertInvoiceDetail;
+                            }
+
+                            if (alertMsg == "")
+                            {
+                                dgv_invoice.DataSource = null;
+                                dgv_invoice = new DataGridView();
+                                txtNamaPembeli.Text = "";
+                                txtTotHarga.Text = "";
+                                txtCompanyName.Text = "";
+                                txtContactNo.Text = "";
+                                rtbAlamatPembeli.Text = "";
+                                txtPalet.Text = "";
+                                txtTO.Text = "";
+                                txtDP.Text = "";
+                                listNamaBarang.Text = "";
+                                MessageBox.Show("Proses Pembuatan Invoice berhasil");                                
+                            }
+                            else
+                                MessageBox.Show("Error : Proses Pembuatan Invoice gagal");
                         }
                         else
-                            MessageBox.Show("Error : Proses Pembuatan Invoice gagal");
+                        {
+                            MessageBox.Show(alertMsg);
+                        }
+
+
+
                     }
 
                 }
