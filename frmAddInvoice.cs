@@ -189,7 +189,7 @@ namespace POS_Andy
                 txtPalet.Name = "txtPalet" + ctrTab.ToString();
                 
                 btnSave.Name = "btnSave" + ctrTab.ToString();
-                btnSave.Text = "Proses";
+                btnSave.Text = "Proses dan Print";
 
                 //cbVendorName.Name = "cbVendorName" + ctrTab.ToString();
                 //cbItemName.Name = "cbItemName" + ctrTab.ToString();
