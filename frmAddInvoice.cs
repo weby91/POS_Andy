@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -1025,6 +1026,29 @@ namespace POS_Andy
                         int isTO;
                         int isDP;
                         int isPalet;
+
+                        if(txtTO.Text != "")
+                        {
+                            if (Regex.IsMatch(txtTO.Text, @"^\d+$") == true)
+                                isTO = int.Parse(txtTO.Text);
+                            else
+                                alertMsg = "Field TO (Titip Ongkos) formatnya harus angka";
+                        }
+                        if (txtDP.Text != "")
+                        {
+                            if (Regex.IsMatch(txtDP.Text, @"^\d+$") == true)
+                                isDP = int.Parse(txtDP.Text);
+                            else
+                                alertMsg = "Field DP formatnya harus angka";
+                        }
+                        if (txtPalet.Text != "")
+                        {
+                            if (Regex.IsMatch(txtPalet.Text, @"^\d+$") == true)
+                                isPalet = int.Parse(txtPalet.Text);
+                            else
+                                alertMsg = "Field DP formatnya harus angka";
+                        }
+
 
                         isTO = chkTO.Checked == true ? 1 : 0;
                         isDP = chkDP.Checked == true ? 1 : 0;
