@@ -596,6 +596,54 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        #region UpdateInvoice_VOID
+        public static string UpdateInvoice_VOID(string invoice_name, string item_name, string void_remarks, int stock)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "UPDATE ms_invoice_detail " +
+                                    "SET    " +
+                                    " is_void = 1 " +
+                                    ",void_dt = NOW() " +
+                                    ",void_remarks = @void_remarks " +
+                                    ",void_by = @superadmin " +
+                                    "WHERE invoice_name = @invoice_name AND item_name = @item_name ";
+
+                cmd.Parameters.AddWithValue("@invoice_name", invoice_name);
+                cmd.Parameters.AddWithValue("@item_name", item_name);
+                cmd.Parameters.AddWithValue("@stock", stock);
+                cmd.Parameters.AddWithValue("@void_remarks", void_remarks);
+                cmd.Parameters.AddWithValue("@superadmin", "andy");
+
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE ms_item " +
+                                    "SET    " +
+                                    " stock = stock + @stock " +
+                                    ",last_modified_dt = NOW() " +
+                                    ",modified_by = @superadmin " +
+                                    "WHERE item_name = @item_name ";
+
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+
+            return result;
+        }
+        #endregion
+
         #region ListStaff
         public static DataTable ListStaff() 
         {
@@ -918,6 +966,144 @@ namespace POS_Andy.Classes
                                     ", satuan as 'Satuan', isi as 'Isi'" +
                                     ",CONCAT(item_name, '##', vendor_name) as 'key' " +
                                     "FROM ms_item                                       ";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error : " + ex.ToString(); ;
+            }
+
+            return dt;
+        }
+        #endregion
+
+        #region ListInvoice_ALL
+        public static DataTable ListInvoice_ALL()
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT a.invoice_id, a.invoice_name 'Invoice Name', a.buyer_name 'Nama Pembeli' " +
+                                   ", a.purchase_total 'Total Pembelian', a.invoice_dt 'Tanggal Invoice' " +
+                                    "FROM ms_invoice a ORDER BY invoice_dt DESC                                      ";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error : " + ex.ToString(); ;
+            }
+
+            return dt;
+        }
+        #endregion
+
+        #region ListInvoiceMaster_FilterByInvoiceName
+        public static DataTable ListInvoiceMaster_FilterByInvoiceName(string invoice_name)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT a.invoice_id, a.invoice_name 'Invoice Name', a.buyer_name 'Nama Pembeli' " +
+                                   ", a.purchase_total 'Total Pembelian', a.invoice_dt 'Tanggal Invoice', a.company_name, a.buyer_address, a.buyer_contact_no, a.payment_method " +
+                                    "FROM ms_invoice a WHERE a.invoice_name = @invoice_name ORDER BY invoice_dt DESC                                      ";
+
+                cmd.Parameters.AddWithValue("@invoice_name", invoice_name);
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error : " + ex.ToString(); ;
+            }
+
+            return dt;
+        }
+        #endregion
+
+        #region ListInvoice_FilterByInvoiceName
+        public static DataTable ListInvoice_FilterByInvoiceName(string invoice_name)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT a.invoice_id, a.invoice_name 'Invoice Name', a.item_name 'Nama Barang' " +
+                                   ", a.item_total 'Total Barang' " +
+                                    "FROM ms_invoice_detail a WHERE invoice_name = @invoice_name and is_void = 0 ORDER BY invoice_dt DESC                                      ";
+
+                cmd.Parameters.AddWithValue("@invoice_name", invoice_name);
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error : " + ex.ToString(); ;
+            }
+
+            return dt;
+        }
+        #endregion
+
+        #region ListInvoiceReport_FilterByInvoiceName
+        public static DataTable ListInvoiceReport_FilterByInvoiceName(string invoice_name)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT a.invoice_id, a.invoice_name 'Invoice Name', a.item_name 'Nama Barang' " +
+                                   ", a.item_total 'Total Barang', a.invoice_dt " +
+                                    "FROM ms_invoice_detail a WHERE invoice_name = @invoice_name and is_void = 0 ORDER BY invoice_dt DESC                                      ";
+
+                cmd.Parameters.AddWithValue("@invoice_name", invoice_name);
 
                 da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);

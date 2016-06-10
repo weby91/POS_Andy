@@ -17,7 +17,7 @@ namespace POS_Andy
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new frmLogin());
-            Application.Run(new frmAddInvoice());
+            Application.Run(new frmMain());
         }
     }
 }
