@@ -51,6 +51,9 @@
             this.satuanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listSatuanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listSatuanToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.invoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tambahInvoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listInvoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.POSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +66,15 @@
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HowDoIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.StatusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.ToolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblDate = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ToolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblTimer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.backupDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ubahPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tstrip_staff = new System.Windows.Forms.ToolStripButton();
             this.ToolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.tstrip_product = new System.Windows.Forms.ToolStripButton();
@@ -71,16 +83,7 @@
             this.tstrip_daily_sales = new System.Windows.Forms.ToolStripButton();
             this.tsrtip_stocksin = new System.Windows.Forms.ToolStripButton();
             this.tsrtip_stocksout = new System.Windows.Forms.ToolStripButton();
-            this.StatusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.ToolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsslUser = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblDate = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ToolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblTimer = new System.Windows.Forms.ToolStripStatusLabel();
-            this.invoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tambahInvoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listInvoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip1.SuspendLayout();
             this.ToolStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
@@ -128,8 +131,9 @@
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
+            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // RecordToolStripMenuItem
             // 
@@ -146,8 +150,11 @@
             // 
             // StaffToolStripMenuItem
             // 
+            this.StaffToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ubahPasswordToolStripMenuItem,
+            this.listStaffToolStripMenuItem});
             this.StaffToolStripMenuItem.Name = "StaffToolStripMenuItem";
-            this.StaffToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.StaffToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.StaffToolStripMenuItem.Text = "Staff";
             this.StaffToolStripMenuItem.Click += new System.EventHandler(this.StaffToolStripMenuItem_Click);
             // 
@@ -160,7 +167,7 @@
             this.hapusToolStripMenuItem,
             this.listProductToolStripMenuItem});
             this.ProductToolStripMenuItem.Name = "ProductToolStripMenuItem";
-            this.ProductToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.ProductToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ProductToolStripMenuItem.Text = "Product";
             this.ProductToolStripMenuItem.Click += new System.EventHandler(this.ProductToolStripMenuItem_Click);
             // 
@@ -202,7 +209,7 @@
             this.tambahVendorToolStripMenuItem,
             this.listVendorToolStripMenuItem});
             this.vendorToolStripMenuItem.Name = "vendorToolStripMenuItem";
-            this.vendorToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.vendorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.vendorToolStripMenuItem.Text = "Vendor";
             // 
             // tambahVendorToolStripMenuItem
@@ -225,7 +232,7 @@
             this.tambahKategoriToolStripMenuItem,
             this.listKategoriToolStripMenuItem});
             this.kategoriToolStripMenuItem.Name = "kategoriToolStripMenuItem";
-            this.kategoriToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.kategoriToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.kategoriToolStripMenuItem.Text = "Kategori";
             // 
             // tambahKategoriToolStripMenuItem
@@ -247,7 +254,7 @@
             this.listSatuanToolStripMenuItem,
             this.listSatuanToolStripMenuItem1});
             this.satuanToolStripMenuItem.Name = "satuanToolStripMenuItem";
-            this.satuanToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.satuanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.satuanToolStripMenuItem.Text = "Satuan";
             // 
             // listSatuanToolStripMenuItem
@@ -264,6 +271,29 @@
             this.listSatuanToolStripMenuItem1.Text = "List Satuan";
             this.listSatuanToolStripMenuItem1.Click += new System.EventHandler(this.listSatuanToolStripMenuItem1_Click);
             // 
+            // invoiceToolStripMenuItem
+            // 
+            this.invoiceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tambahInvoiceToolStripMenuItem,
+            this.listInvoiceToolStripMenuItem});
+            this.invoiceToolStripMenuItem.Name = "invoiceToolStripMenuItem";
+            this.invoiceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.invoiceToolStripMenuItem.Text = "Invoice";
+            // 
+            // tambahInvoiceToolStripMenuItem
+            // 
+            this.tambahInvoiceToolStripMenuItem.Name = "tambahInvoiceToolStripMenuItem";
+            this.tambahInvoiceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.tambahInvoiceToolStripMenuItem.Text = "Tambah Invoice";
+            this.tambahInvoiceToolStripMenuItem.Click += new System.EventHandler(this.tambahInvoiceToolStripMenuItem_Click);
+            // 
+            // listInvoiceToolStripMenuItem
+            // 
+            this.listInvoiceToolStripMenuItem.Name = "listInvoiceToolStripMenuItem";
+            this.listInvoiceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.listInvoiceToolStripMenuItem.Text = "List Invoice";
+            this.listInvoiceToolStripMenuItem.Click += new System.EventHandler(this.listInvoiceToolStripMenuItem_Click);
+            // 
             // TransactionToolStripMenuItem
             // 
             this.TransactionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -275,7 +305,7 @@
             // POSToolStripMenuItem
             // 
             this.POSToolStripMenuItem.Name = "POSToolStripMenuItem";
-            this.POSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.POSToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.POSToolStripMenuItem.Text = "POS";
             this.POSToolStripMenuItem.Click += new System.EventHandler(this.POSToolStripMenuItem_Click);
             // 
@@ -304,7 +334,8 @@
             // 
             this.ToolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CalculatorToolStripMenuItem,
-            this.NotepadToolStripMenuItem});
+            this.NotepadToolStripMenuItem,
+            this.backupDatabaseToolStripMenuItem});
             this.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem";
             this.ToolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.ToolsToolStripMenuItem.Text = "Tools";
@@ -312,14 +343,16 @@
             // CalculatorToolStripMenuItem
             // 
             this.CalculatorToolStripMenuItem.Name = "CalculatorToolStripMenuItem";
-            this.CalculatorToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.CalculatorToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.CalculatorToolStripMenuItem.Text = "Calculator";
+            this.CalculatorToolStripMenuItem.Click += new System.EventHandler(this.CalculatorToolStripMenuItem_Click);
             // 
             // NotepadToolStripMenuItem
             // 
             this.NotepadToolStripMenuItem.Name = "NotepadToolStripMenuItem";
-            this.NotepadToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.NotepadToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.NotepadToolStripMenuItem.Text = "Notepad";
+            this.NotepadToolStripMenuItem.Click += new System.EventHandler(this.NotepadToolStripMenuItem_Click);
             // 
             // HelpToolStripMenuItem
             // 
@@ -361,6 +394,82 @@
             this.ToolStrip1.Size = new System.Drawing.Size(768, 75);
             this.ToolStrip1.TabIndex = 4;
             this.ToolStrip1.Text = "ToolStrip1";
+            // 
+            // StatusStrip1
+            // 
+            this.StatusStrip1.BackColor = System.Drawing.SystemColors.Info;
+            this.StatusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripStatusLabel1,
+            this.tsslUser,
+            this.ToolStripStatusLabel3,
+            this.lblDate,
+            this.ToolStripStatusLabel5,
+            this.lblTimer});
+            this.StatusStrip1.Location = new System.Drawing.Point(0, 239);
+            this.StatusStrip1.Name = "StatusStrip1";
+            this.StatusStrip1.Size = new System.Drawing.Size(768, 22);
+            this.StatusStrip1.TabIndex = 14;
+            this.StatusStrip1.Text = "StatusStrip1";
+            // 
+            // ToolStripStatusLabel1
+            // 
+            this.ToolStripStatusLabel1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1";
+            this.ToolStripStatusLabel1.Size = new System.Drawing.Size(81, 17);
+            this.ToolStripStatusLabel1.Text = "Active User :";
+            // 
+            // tsslUser
+            // 
+            this.tsslUser.AutoSize = false;
+            this.tsslUser.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsslUser.Name = "tsslUser";
+            this.tsslUser.Size = new System.Drawing.Size(150, 17);
+            this.tsslUser.Text = " ";
+            this.tsslUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ToolStripStatusLabel3
+            // 
+            this.ToolStripStatusLabel3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(43, 17);
+            this.ToolStripStatusLabel3.Text = "Date :";
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = false;
+            this.lblDate.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(121, 17);
+            this.lblDate.Text = " mm/dd/yyyy";
+            this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ToolStripStatusLabel5
+            // 
+            this.ToolStripStatusLabel5.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5";
+            this.ToolStripStatusLabel5.Size = new System.Drawing.Size(44, 17);
+            this.ToolStripStatusLabel5.Text = "Time :";
+            // 
+            // lblTimer
+            // 
+            this.lblTimer.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(71, 17);
+            this.lblTimer.Text = "hh:mm:sss";
+            // 
+            // backupDatabaseToolStripMenuItem
+            // 
+            this.backupDatabaseToolStripMenuItem.Name = "backupDatabaseToolStripMenuItem";
+            this.backupDatabaseToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.backupDatabaseToolStripMenuItem.Text = "Backup Database";
+            this.backupDatabaseToolStripMenuItem.Click += new System.EventHandler(this.backupDatabaseToolStripMenuItem_Click);
+            // 
+            // ubahPasswordToolStripMenuItem
+            // 
+            this.ubahPasswordToolStripMenuItem.Name = "ubahPasswordToolStripMenuItem";
+            this.ubahPasswordToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.ubahPasswordToolStripMenuItem.Text = "Ubah Password";
+            this.ubahPasswordToolStripMenuItem.Click += new System.EventHandler(this.ubahPasswordToolStripMenuItem_Click);
             // 
             // tstrip_staff
             // 
@@ -474,90 +583,12 @@
             this.tsrtip_stocksout.Text = "Stocks Out";
             this.tsrtip_stocksout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // StatusStrip1
+            // listStaffToolStripMenuItem
             // 
-            this.StatusStrip1.BackColor = System.Drawing.SystemColors.Info;
-            this.StatusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripStatusLabel1,
-            this.tsslUser,
-            this.ToolStripStatusLabel3,
-            this.lblDate,
-            this.ToolStripStatusLabel5,
-            this.lblTimer});
-            this.StatusStrip1.Location = new System.Drawing.Point(0, 239);
-            this.StatusStrip1.Name = "StatusStrip1";
-            this.StatusStrip1.Size = new System.Drawing.Size(768, 22);
-            this.StatusStrip1.TabIndex = 14;
-            this.StatusStrip1.Text = "StatusStrip1";
-            // 
-            // ToolStripStatusLabel1
-            // 
-            this.ToolStripStatusLabel1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1";
-            this.ToolStripStatusLabel1.Size = new System.Drawing.Size(81, 17);
-            this.ToolStripStatusLabel1.Text = "Active User :";
-            // 
-            // tsslUser
-            // 
-            this.tsslUser.AutoSize = false;
-            this.tsslUser.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsslUser.Name = "tsslUser";
-            this.tsslUser.Size = new System.Drawing.Size(150, 17);
-            this.tsslUser.Text = " ";
-            this.tsslUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ToolStripStatusLabel3
-            // 
-            this.ToolStripStatusLabel3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(43, 17);
-            this.ToolStripStatusLabel3.Text = "Date :";
-            // 
-            // lblDate
-            // 
-            this.lblDate.AutoSize = false;
-            this.lblDate.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(121, 17);
-            this.lblDate.Text = " mm/dd/yyyy";
-            this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ToolStripStatusLabel5
-            // 
-            this.ToolStripStatusLabel5.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5";
-            this.ToolStripStatusLabel5.Size = new System.Drawing.Size(44, 17);
-            this.ToolStripStatusLabel5.Text = "Time :";
-            // 
-            // lblTimer
-            // 
-            this.lblTimer.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTimer.Name = "lblTimer";
-            this.lblTimer.Size = new System.Drawing.Size(71, 17);
-            this.lblTimer.Text = "hh:mm:sss";
-            // 
-            // invoiceToolStripMenuItem
-            // 
-            this.invoiceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tambahInvoiceToolStripMenuItem,
-            this.listInvoiceToolStripMenuItem});
-            this.invoiceToolStripMenuItem.Name = "invoiceToolStripMenuItem";
-            this.invoiceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.invoiceToolStripMenuItem.Text = "Invoice";
-            // 
-            // tambahInvoiceToolStripMenuItem
-            // 
-            this.tambahInvoiceToolStripMenuItem.Name = "tambahInvoiceToolStripMenuItem";
-            this.tambahInvoiceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.tambahInvoiceToolStripMenuItem.Text = "Tambah Invoice";
-            this.tambahInvoiceToolStripMenuItem.Click += new System.EventHandler(this.tambahInvoiceToolStripMenuItem_Click);
-            // 
-            // listInvoiceToolStripMenuItem
-            // 
-            this.listInvoiceToolStripMenuItem.Name = "listInvoiceToolStripMenuItem";
-            this.listInvoiceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.listInvoiceToolStripMenuItem.Text = "List Invoice";
-            this.listInvoiceToolStripMenuItem.Click += new System.EventHandler(this.listInvoiceToolStripMenuItem_Click);
+            this.listStaffToolStripMenuItem.Name = "listStaffToolStripMenuItem";
+            this.listStaffToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.listStaffToolStripMenuItem.Text = "List Staff";
+            this.listStaffToolStripMenuItem.Click += new System.EventHandler(this.listStaffToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -636,5 +667,8 @@
         private System.Windows.Forms.ToolStripMenuItem invoiceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tambahInvoiceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listInvoiceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem backupDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ubahPasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listStaffToolStripMenuItem;
     }
 }

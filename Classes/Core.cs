@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,6 +21,8 @@ namespace POS_Andy.Classes
             string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
             MySqlConnection con = new MySqlConnection(conStr);
             MySqlCommand cmd = con.CreateCommand();
+            DataTable dt = new DataTable();
+            
 
             try
             {
@@ -29,11 +34,16 @@ namespace POS_Andy.Classes
 
                 cmd.Parameters.AddWithValue("@un", un);
                 cmd.Parameters.AddWithValue("@pw", pw);
-                
-                int? recordCount = (int?)cmd.ExecuteScalar();
 
-                if (recordCount != null)
+
+                MySqlDataAdapter sda = new MySqlDataAdapter(cmd);
+                sda.Fill(dt);
+
+                if (dt.Rows.Count == 1)
+                {
                     result = "Selamat datang, " + un;
+                    Core.LogInfo.roles_id = dt.Rows[0]["roles_id"].ToString();
+                }
                 else
                     result = "Login gagal. Pastikan username dan password yang anda input sudah benar.";
 
@@ -97,7 +107,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@address", address);
                 cmd.Parameters.AddWithValue("@mobile_no", mobile_no);
                 cmd.Parameters.AddWithValue("@level", level);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
                                
@@ -152,7 +162,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@address", address);
                 cmd.Parameters.AddWithValue("@mobile_no", mobile_no);
                 cmd.Parameters.AddWithValue("@email", email);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -195,7 +205,7 @@ namespace POS_Andy.Classes
                                     ")                                               ";
 
                 cmd.Parameters.AddWithValue("@category_name", category_name);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -238,7 +248,7 @@ namespace POS_Andy.Classes
                                     ")                                               ";
 
                 cmd.Parameters.AddWithValue("@nama_satuan", nama_satuan);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -310,7 +320,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@category", category);
                 cmd.Parameters.AddWithValue("@satuan", satuan);
                 cmd.Parameters.AddWithValue("@isi", isi);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -375,7 +385,7 @@ namespace POS_Andy.Classes
                 //cmd.Parameters.AddWithValue("@category", category);
                 //cmd.Parameters.AddWithValue("@satuan", satuan);
                 //cmd.Parameters.AddWithValue("@isi", isi);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -444,7 +454,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@is_TO", is_TO);
                 cmd.Parameters.AddWithValue("@is_DP", is_DP);
                 cmd.Parameters.AddWithValue("@is_Palet", is_Palet);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
                 
                 cmd.ExecuteNonQuery();
 
@@ -525,7 +535,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@category", category);
                 cmd.Parameters.AddWithValue("@satuan", satuan);
                 cmd.Parameters.AddWithValue("@isi", isi);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -581,7 +591,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@satuan", satuan);
                 cmd.Parameters.AddWithValue("@isi", isi);
                 cmd.Parameters.AddWithValue("@key", key);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -620,7 +630,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@item_name", item_name);
                 cmd.Parameters.AddWithValue("@stock", stock);
                 cmd.Parameters.AddWithValue("@void_remarks", void_remarks);
-                cmd.Parameters.AddWithValue("@superadmin", "andy");
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -630,6 +640,42 @@ namespace POS_Andy.Classes
                                     ",last_modified_dt = NOW() " +
                                     ",modified_by = @superadmin " +
                                     "WHERE item_name = @item_name ";
+
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region UpdateUserPassword
+        public static string UpdateUserPassword(string userid, string password)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "UPDATE ms_user " +
+                                    "SET    " +
+                                    " password = md5(@password) " +
+                                    ",last_modified_dt = NOW() " +
+                                    ",modified_by = @superadmin " +
+                                    "WHERE username = @userid";
+
+                cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@superadmin", Core.LogInfo.userid);
 
                 cmd.ExecuteNonQuery();
 
@@ -1154,6 +1200,60 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        //wb 20160610
+        #region BackupDB
+        public static void BackupDB()
+        {
+            string conStr = "server=localhost;user=root;pwd=;database=pos_andy;";
+            string day, month, year, hour, minute, second;
+            string date;
+            string milliseconds = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond).ToString();
+
+            date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            year = date.Split('-')[0];
+            month = date.Split('-')[1];
+            day = date.Split('-')[2];
+            hour = date.Split('-')[3];
+            minute = date.Split('-')[4];
+            second = date.Split('-')[5];
+
+            string combineTime = year + month + day + hour + minute + second;
+
+            string file = "C:\\Backup Database\\" + "pos_" + combineTime + milliseconds.Substring(0,3) + ".sql";
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(conStr))
+                {
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        using (MySqlBackup mb = new MySqlBackup(cmd))
+                        {
+                            cmd.Connection = conn;
+                            conn.Open();
+                            mb.ExportToFile(file);
+                            conn.Close();
+
+                            MessageBox.Show("Backup Berhasil");
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Teknikal Error, Backup Gagal");
+            }           
+        }
+        #endregion
+
+        //wb 20160610
+        #region LogInfo
+        public static class LogInfo
+        {
+            public static string userid;
+            public static string roles_id;
+        }
+        #endregion
 
     }
 }

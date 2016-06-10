@@ -37,6 +37,7 @@ namespace POS_Andy
 
             if(result.Contains("Selamat"))
             {
+                Core.LogInfo.userid = txt_username.Text;
                 this.Hide();
                 fm.Show();                
             }
@@ -44,9 +45,8 @@ namespace POS_Andy
             {
                 txt_username.Clear();
                 txt_password.Clear();
+                MessageBox.Show(result);
             }
-
-            MessageBox.Show(result);
         }
 
         private void lbl_username_Click(object sender, EventArgs e)
