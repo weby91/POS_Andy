@@ -410,7 +410,7 @@ namespace POS_Andy.Classes
 
         #region TambahInvoiceDetail
         public static string TambahInvoiceDetail(int invoice_id, string invoice_no, string item_name, string vendor_name, int item_total
-                                        , int is_TO, int is_DP, int is_Palet)
+                                        , int is_TO, int is_DP, int is_Palet, int item_price)
         {
             string result = "";
             string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
@@ -428,6 +428,7 @@ namespace POS_Andy.Classes
                                     ",item_name                                          " +
                                     ",vendor_name                                        " +
                                     ",item_total                                        " +
+                                    ",item_price                                       " +
                                     ",is_TO                                         " +
                                     ",is_DP                                           " +
                                     ",is_Palet                                           " +
@@ -439,6 +440,7 @@ namespace POS_Andy.Classes
                                     ",@item_name                                               " +
                                     ",@vendor_name                                               " +
                                     ",@item_total                                               " +
+                                    ",@item_price                                              " +
                                     ",@is_TO                                               " +
                                     ",@is_DP                                               " +
                                     ",@is_Palet                                               " +
@@ -451,6 +453,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@item_name", item_name);
                 cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
                 cmd.Parameters.AddWithValue("@item_total", item_total);
+                cmd.Parameters.AddWithValue("@item_price", item_price);
                 cmd.Parameters.AddWithValue("@is_TO", is_TO);
                 cmd.Parameters.AddWithValue("@is_DP", is_DP);
                 cmd.Parameters.AddWithValue("@is_Palet", is_Palet);

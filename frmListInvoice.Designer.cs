@@ -32,30 +32,23 @@
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
             this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.invoice_no = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.invoice_dt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.item_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vendor_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buyer_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label4 = new System.Windows.Forms.Label();
             this.cbFilter = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dgv = new System.Windows.Forms.DataGridView();
+            this.lblFilter = new System.Windows.Forms.Label();
+            this.txtFilter = new System.Windows.Forms.TextBox();
+            this.lblDari = new System.Windows.Forms.Label();
+            this.lblNamaPembeli = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dtpTo);
-            this.groupBox1.Controls.Add(this.dtpFrom);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.dgv);
             this.groupBox1.Location = new System.Drawing.Point(18, 18);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
@@ -67,110 +60,67 @@
             // 
             // dtpTo
             // 
-            this.dtpTo.Location = new System.Drawing.Point(786, 589);
+            this.dtpTo.Location = new System.Drawing.Point(226, 129);
             this.dtpTo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpTo.Name = "dtpTo";
-            this.dtpTo.Size = new System.Drawing.Size(190, 26);
+            this.dtpTo.Size = new System.Drawing.Size(293, 26);
             this.dtpTo.TabIndex = 9;
             this.dtpTo.Value = new System.DateTime(2016, 5, 26, 0, 0, 0, 0);
             // 
             // dtpFrom
             // 
-            this.dtpFrom.Location = new System.Drawing.Point(482, 589);
+            this.dtpFrom.Location = new System.Drawing.Point(226, 91);
             this.dtpFrom.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpFrom.Name = "dtpFrom";
-            this.dtpFrom.Size = new System.Drawing.Size(190, 26);
+            this.dtpFrom.Size = new System.Drawing.Size(293, 26);
             this.dtpFrom.TabIndex = 8;
             this.dtpFrom.Value = new System.DateTime(2016, 5, 26, 0, 0, 0, 0);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(696, 598);
+            this.label2.Location = new System.Drawing.Point(139, 129);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "Sampai";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(420, 600);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 20);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Dari";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblNamaPembeli);
+            this.groupBox2.Controls.Add(this.lblDari);
+            this.groupBox2.Controls.Add(this.dtpTo);
+            this.groupBox2.Controls.Add(this.txtFilter);
+            this.groupBox2.Controls.Add(this.dtpFrom);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.lblFilter);
             this.groupBox2.Controls.Add(this.cbFilter);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(52, 32);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(760, 183);
+            this.groupBox2.Size = new System.Drawing.Size(932, 183);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filter";
             // 
-            // dataGridView1
+            // cbFilter
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.invoice_no,
-            this.invoice_dt,
-            this.item_name,
-            this.vendor_name,
-            this.total_price,
-            this.buyer_name});
-            this.dataGridView1.Location = new System.Drawing.Point(52, 225);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1500, 231);
-            this.dataGridView1.TabIndex = 4;
-            // 
-            // invoice_no
-            // 
-            this.invoice_no.HeaderText = "No. Invoice";
-            this.invoice_no.Name = "invoice_no";
-            this.invoice_no.ReadOnly = true;
-            // 
-            // invoice_dt
-            // 
-            this.invoice_dt.HeaderText = "Tanggal";
-            this.invoice_dt.Name = "invoice_dt";
-            this.invoice_dt.ReadOnly = true;
-            // 
-            // item_name
-            // 
-            this.item_name.HeaderText = "Nama Barang";
-            this.item_name.Name = "item_name";
-            this.item_name.ReadOnly = true;
-            // 
-            // vendor_name
-            // 
-            this.vendor_name.HeaderText = "Nama Vendor";
-            this.vendor_name.Name = "vendor_name";
-            this.vendor_name.ReadOnly = true;
-            // 
-            // total_price
-            // 
-            this.total_price.HeaderText = "Total";
-            this.total_price.Name = "total_price";
-            this.total_price.ReadOnly = true;
-            // 
-            // buyer_name
-            // 
-            this.buyer_name.HeaderText = "Nama Pembeli";
-            this.buyer_name.Name = "buyer_name";
-            this.buyer_name.ReadOnly = true;
+            this.cbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFilter.FormattingEnabled = true;
+            this.cbFilter.Items.AddRange(new object[] {
+            "Semua Invoice",
+            "No. Invoice",
+            "Tanggal Invoice",
+            "Nama Pembeli"});
+            this.cbFilter.Location = new System.Drawing.Point(226, 34);
+            this.cbFilter.Name = "cbFilter";
+            this.cbFilter.Size = new System.Drawing.Size(253, 28);
+            this.cbFilter.TabIndex = 1;
+            this.cbFilter.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -181,17 +131,53 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Filter Berdasarkan";
             // 
-            // cbFilter
+            // dgv
             // 
-            this.cbFilter.FormattingEnabled = true;
-            this.cbFilter.Items.AddRange(new object[] {
-            "No. Invoice",
-            "Tanggal Invoice",
-            "Nama Pembeli"});
-            this.cbFilter.Location = new System.Drawing.Point(226, 34);
-            this.cbFilter.Name = "cbFilter";
-            this.cbFilter.Size = new System.Drawing.Size(253, 28);
-            this.cbFilter.TabIndex = 1;
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.AllowUserToOrderColumns = true;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(52, 225);
+            this.dgv.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dgv.Name = "dgv";
+            this.dgv.ReadOnly = true;
+            this.dgv.Size = new System.Drawing.Size(932, 231);
+            this.dgv.TabIndex = 4;
+            // 
+            // lblFilter
+            // 
+            this.lblFilter.AutoSize = true;
+            this.lblFilter.Location = new System.Drawing.Point(115, 94);
+            this.lblFilter.Name = "lblFilter";
+            this.lblFilter.Size = new System.Drawing.Size(87, 20);
+            this.lblFilter.TabIndex = 2;
+            this.lblFilter.Text = "No. Invoice";
+            this.lblFilter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtFilter
+            // 
+            this.txtFilter.Location = new System.Drawing.Point(226, 91);
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.Size = new System.Drawing.Size(253, 26);
+            this.txtFilter.TabIndex = 3;
+            // 
+            // lblDari
+            // 
+            this.lblDari.AutoSize = true;
+            this.lblDari.Location = new System.Drawing.Point(164, 94);
+            this.lblDari.Name = "lblDari";
+            this.lblDari.Size = new System.Drawing.Size(38, 20);
+            this.lblDari.TabIndex = 10;
+            this.lblDari.Text = "Dari";
+            // 
+            // lblNamaPembeli
+            // 
+            this.lblNamaPembeli.AutoSize = true;
+            this.lblNamaPembeli.Location = new System.Drawing.Point(95, 96);
+            this.lblNamaPembeli.Name = "lblNamaPembeli";
+            this.lblNamaPembeli.Size = new System.Drawing.Size(111, 20);
+            this.lblNamaPembeli.TabIndex = 11;
+            this.lblNamaPembeli.Text = "Nama Pembeli";
             // 
             // frmListInvoice
             // 
@@ -205,10 +191,9 @@
             this.Text = "Form Daftar Invoice";
             this.Load += new System.EventHandler(this.frmListInvoice_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -216,20 +201,17 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn invoice_no;
-        private System.Windows.Forms.DataGridViewTextBoxColumn invoice_dt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn item_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vendor_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn total_price;
-        private System.Windows.Forms.DataGridViewTextBoxColumn buyer_name;
+        private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtpFrom;
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbFilter;
+        private System.Windows.Forms.TextBox txtFilter;
+        private System.Windows.Forms.Label lblFilter;
+        private System.Windows.Forms.Label lblNamaPembeli;
+        private System.Windows.Forms.Label lblDari;
     }
 }
