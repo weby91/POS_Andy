@@ -104,5 +104,29 @@ namespace POS_Andy
             frmListProduct flistProduct = new frmListProduct();
             flistProduct.Show();
         }
+
+        private void tstrip_pos_Click(object sender, EventArgs e)
+        {
+            frmAddInvoice fAddInvoice = new frmAddInvoice();
+            fAddInvoice.Show();
+        }
+
+        private void tambahInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAddInvoice fAddInvoice = new frmAddInvoice();
+            fAddInvoice.Show();
+        }
+
+        private void listInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmListInvoice fListInvoice = new frmListInvoice();
+            fListInvoice.Show();
+        }
+
+        private void POSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAddInvoice fAddInvoice = new frmAddInvoice();
+            fAddInvoice.Show();
+        }
     }
 }

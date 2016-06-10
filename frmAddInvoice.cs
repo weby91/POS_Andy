@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -86,6 +87,10 @@ namespace POS_Andy
                 Label lblNamaVendor = new Label();
                 Label lblNamaBarang = new Label();
                 Label lblTotal = new Label();
+                Label lblDP = new Label();
+                Label lblTO = new Label();
+                Label lblPalet = new Label();
+
 
                 TextBox txtCustomerName_ = new TextBox();
                 RichTextBox rtbAlamat_ = new RichTextBox();
@@ -100,6 +105,11 @@ namespace POS_Andy
                 txtTotHarga.Font = new Font(txtTotHarga.Font.FontFamily, 24);
                 txtTotHarga.ReadOnly = true;
                 txtTotHarga.TextAlign = HorizontalAlignment.Right;
+
+                TextBox txtDP = new TextBox();
+                TextBox txtTO = new TextBox();
+                TextBox txtPalet = new TextBox();
+
 
                 lblTotal.Font = new Font(lblTotal.Font.FontFamily, 24);
                 lblTotal.TextAlign = ContentAlignment.MiddleRight;
@@ -154,6 +164,10 @@ namespace POS_Andy
                 lblNamaVendor.Name = "lblNamaVendor" + ctrTab.ToString();
                 lblNamaBarang.Name = "lblNamaBarang" + ctrTab.ToString();
                 lblTotal.Name = "lblTotal" + ctrTab.ToString();
+                lblDP.Name = "lblDP" + ctrTab.ToString();
+                lblTO.Name = "lblTO" + ctrTab.ToString();
+                lblPalet.Name = "lblPalet" + ctrTab.ToString();
+
 
                 btnAdd.Name = "btnAdd" + ctrTab.ToString();
                 btnClear.Name = "btnClear" + ctrTab.ToString();
@@ -170,9 +184,12 @@ namespace POS_Andy
                 chkDP.Name = "chkDP" + ctrTab.ToString();
                 chkPalet.Name = "chkPalet" + ctrTab.ToString();
                 chkTitipOngkos.Name = "chkTitipOngkos" + ctrTab.ToString();
-
+                txtDP.Name = "txtDP" + ctrTab.ToString();
+                txtTO.Name = "txtTO" + ctrTab.ToString();
+                txtPalet.Name = "txtPalet" + ctrTab.ToString();
+                
                 btnSave.Name = "btnSave" + ctrTab.ToString();
-                btnSave.Text = "Proses";
+                btnSave.Text = "Proses dan Print";
 
                 //cbVendorName.Name = "cbVendorName" + ctrTab.ToString();
                 //cbItemName.Name = "cbItemName" + ctrTab.ToString();
@@ -199,6 +216,9 @@ namespace POS_Andy
                 chkPalet.Text = "Palet";
                 chkTitipOngkos.Text = "Titip Ongkos";
                 lblTotal.Text = "Total";
+                lblDP.Text = "DP";
+                lblTO.Text = "TO";
+                lblPalet.Text = "Palet";
 
                 dtpPembayaran.Format = DateTimePickerFormat.Custom;
                 dtpPembayaran.CustomFormat = "dd-MM-yyyy";
@@ -242,6 +262,16 @@ namespace POS_Andy
                 chkPalet.Size = new System.Drawing.Size(70, 40);
                 chkTitipOngkos.Location = new System.Drawing.Point(620, 110);
                 chkTitipOngkos.Size = new System.Drawing.Size(100, 40);
+
+                lblDP.Location = new System.Drawing.Point(680, 50);
+                lblTO.Location = new System.Drawing.Point(680, 80);
+                lblPalet.Location = new System.Drawing.Point(680, 110);
+
+                txtDP.Location = new System.Drawing.Point(730, 50);
+                txtTO.Location = new System.Drawing.Point(730, 80);
+                txtPalet.Location = new System.Drawing.Point(730, 110);
+
+
                 //chkDP.Size = new System.Drawing.Size(150, 60);
 
                 //cbVendorName.Size = new System.Drawing.Size(250, 20);
@@ -268,10 +298,18 @@ namespace POS_Andy
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
 
+                groupBoxDataPembeli[0].Controls.Add(txtDP);
+                groupBoxDataPembeli[0].Controls.Add(txtTO);
+                groupBoxDataPembeli[0].Controls.Add(txtPalet);
+
+                groupBoxDataPembeli[0].Controls.Add(lblDP);
+                groupBoxDataPembeli[0].Controls.Add(lblTO);
+                groupBoxDataPembeli[0].Controls.Add(lblPalet);
+
                 groupBoxDataPembeli[0].Controls.Add(lblTotal);
-                groupBoxDataPembeli[0].Controls.Add(chkDP);
-                groupBoxDataPembeli[0].Controls.Add(chkPalet);
-                groupBoxDataPembeli[0].Controls.Add(chkTitipOngkos);
+                //groupBoxDataPembeli[0].Controls.Add(chkDP);
+                //groupBoxDataPembeli[0].Controls.Add(chkPalet);
+                //groupBoxDataPembeli[0].Controls.Add(chkTitipOngkos);
                 groupBoxDataPembeli[0].Controls.Add(listNamaBarang);
                 groupBoxDataPembeli[0].Controls.Add(btnClear);
                 groupBoxDataPembeli[0].Controls.Add(btnSave);
@@ -335,7 +373,7 @@ namespace POS_Andy
                     btnSave_Click(sender, e, dgv_invoice, txtCustomerName_, rtbAlamat_
                               , txtCompanyName_, txtContactNo_
                               , cbEkspedisi, dtpPembayaran
-                              , chkDP, chkPalet, chkTitipOngkos, txtTotHarga);};
+                              , txtDP, txtTO, txtPalet, txtTotHarga, listNamaBarang);};
 
                 //new System.EventHandler(btnAdd_Click, dgv_invoice);
                 dgv_invoice.CellEndEdit += new DataGridViewCellEventHandler((s, e1) => dgv_invoice_CellEndEdit(s, e1, txtTotHarga));
@@ -859,7 +897,8 @@ namespace POS_Andy
 
         private void btnSave_Click(object sender, System.EventArgs e, DataGridView dgv_invoice, TextBox txtNamaPembeli, RichTextBox rtbAlamatPembeli
                                     ,TextBox txtCompanyName, TextBox txtContactNo, ComboBox payment_method, DateTimePicker invoice_dt
-                                    ,CheckBox chkDP, CheckBox chkPalet, CheckBox chkTO, TextBox txtTotHarga)
+                                    ,TextBox txtDP, TextBox txtTO, TextBox txtPalet, TextBox txtTotHarga
+                                    ,AutoCompleteTextbox listNamaBarang)
         {
             try
             {
@@ -889,15 +928,16 @@ namespace POS_Andy
                 year = thisDay.Year.ToString();
 
                 //Validation
-                if (txtNamaPembeli.Text.ToString() == "")
-                    alertMsg = "Nama Pembeli harus diisi";
-                else if (rtbAlamatPembeli.Text.ToString() == "")
-                    alertMsg = "Alamat Pembeli harus diisi";
-                else if (txtContactNo.Text.ToString() == "")
-                    alertMsg = "No. Telp/HP harus diisi";
-                else if (invoice_dt.Text.ToString() == "")
-                    alertMsg = "Tanggal Pembayaran harus diisi";
-                else if (dgv_invoice.Rows.Count == 0)
+                // wb 20160609 - Andi request buat hilangin validasi di bawah
+                //if (txtNamaPembeli.Text.ToString() == "")
+                //    alertMsg = "Nama Pembeli harus diisi";
+                //else if (rtbAlamatPembeli.Text.ToString() == "")
+                //    alertMsg = "Alamat Pembeli harus diisi";
+                //else if (txtContactNo.Text.ToString() == "")
+                //    alertMsg = "No. Telp/HP harus diisi";
+                //else if (invoice_dt.Text.ToString() == "")
+                //    alertMsg = "Tanggal Pembayaran harus diisi";
+                if (dgv_invoice.Rows.Count == 0)
                     alertMsg = "Silahkan pilih barang yang ingin dibeli";
 
                 for (int i = 0; i < dgv_invoice.Rows.Count; ++i)
@@ -985,39 +1025,75 @@ namespace POS_Andy
                         string item_name;
                         string vendor_name;
                         int item_total;
-                        int isTO;
-                        int isDP;
-                        int isPalet;
+                        int isTO = 0;
+                        int isDP = 0;
+                        int isPalet = 0;
 
-                        isTO = chkTO.Checked == true ? 1 : 0;
-                        isDP = chkDP.Checked == true ? 1 : 0;
-                        isPalet = chkPalet.Checked == true ? 1 : 0;
-
-                        for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                        if(txtTO.Text != "" && txtTO.Text != "0")
                         {
-                            item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
-                            vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
-                            item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
-
-                            string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), "INV" + year + month + day + nextInvoiceNo
-                                                        , item_name, vendor_name, item_total, isTO, isDP, isPalet);
-
-                            alertMsg = insertInvoiceDetail;
+                            if (Regex.IsMatch(txtTO.Text, @"^\d+$") == true)
+                                isTO = int.Parse(txtTO.Text);
+                            else
+                                alertMsg = "Field TO (Titip Ongkos) formatnya harus angka";
                         }
+                        if (txtDP.Text != "" && txtDP.Text != "0")
+                        {
+                            if (Regex.IsMatch(txtDP.Text, @"^\d+$") == true)
+                                isDP = int.Parse(txtDP.Text);
+                            else
+                                alertMsg = "Field DP formatnya harus angka";
+                        }
+                        if (txtPalet.Text != "" && txtPalet.Text != "0")
+                        {
+                            if (Regex.IsMatch(txtPalet.Text, @"^\d+$") == true)
+                                isPalet = int.Parse(txtPalet.Text);
+                            else
+                                alertMsg = "Field Palet formatnya harus angka";
+                        }
+
+                        //isTO = chkTO.Checked == true ? 1 : 0;
+                        //isDP = chkDP.Checked == true ? 1 : 0;
+                        //isPalet = chkPalet.Checked == true ? 1 : 0;
 
                         if (alertMsg == "")
                         {
-                            MessageBox.Show("Proses Pembuatan Invoice berhasil");
-                            dgv_invoice.Rows.Clear();
-                            dgv_invoice.DataSource = null;
-                            txtNamaPembeli.Text = "";
-                            txtTotHarga.Text = "";
-                            txtCompanyName.Text = "";
-                            txtContactNo.Text = "";
-                            rtbAlamatPembeli.Text = "";
+                            for (int i = 0; i < dgv_invoice.Rows.Count; i++)
+                            {
+                                item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
+                                vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
+                                item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
+
+                                string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), "INV" + year + month + day + nextInvoiceNo
+                                                            , item_name, vendor_name, item_total, isTO, isDP, isPalet);
+
+                                alertMsg = insertInvoiceDetail;
+                            }
+
+                            if (alertMsg == "")
+                            {
+                                dgv_invoice.DataSource = null;
+                                dgv_invoice = new DataGridView();
+                                txtNamaPembeli.Text = "";
+                                txtTotHarga.Text = "";
+                                txtCompanyName.Text = "";
+                                txtContactNo.Text = "";
+                                rtbAlamatPembeli.Text = "";
+                                txtPalet.Text = "";
+                                txtTO.Text = "";
+                                txtDP.Text = "";
+                                listNamaBarang.Text = "";
+                                MessageBox.Show("Proses Pembuatan Invoice berhasil");                                
+                            }
+                            else
+                                MessageBox.Show("Error : Proses Pembuatan Invoice gagal");
                         }
                         else
-                            MessageBox.Show("Error : Proses Pembuatan Invoice gagal");
+                        {
+                            MessageBox.Show(alertMsg);
+                        }
+
+
+
                     }
 
                 }
