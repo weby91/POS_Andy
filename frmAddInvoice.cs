@@ -90,6 +90,7 @@ namespace POS_Andy
                 Label lblDP = new Label();
                 Label lblTO = new Label();
                 Label lblPalet = new Label();
+                Label lblItemPrice = new Label();
 
 
                 TextBox txtCustomerName_ = new TextBox();
@@ -167,6 +168,7 @@ namespace POS_Andy
                 lblDP.Name = "lblDP" + ctrTab.ToString();
                 lblTO.Name = "lblTO" + ctrTab.ToString();
                 lblPalet.Name = "lblPalet" + ctrTab.ToString();
+                lblItemPrice.Name = "lblItemPrice" + ctrTab.ToString();
 
 
                 btnAdd.Name = "btnAdd" + ctrTab.ToString();
@@ -219,6 +221,8 @@ namespace POS_Andy
                 lblDP.Text = "DP";
                 lblTO.Text = "TO";
                 lblPalet.Text = "Palet";
+
+                lblItemPrice.Visible = false;
 
                 dtpPembayaran.Format = DateTimePickerFormat.Custom;
                 dtpPembayaran.CustomFormat = "dd-MM-yyyy";
@@ -297,6 +301,8 @@ namespace POS_Andy
                 listNamaBarang.Size = new System.Drawing.Size(400, 20);
                 listNamaBarang.Location = new System.Drawing.Point(40, 230);
                 dtpPembayaran.BringToFront();
+
+                //groupBoxDataPembeli[0].Controls.Add(lblItemPrice);
 
                 groupBoxDataPembeli[0].Controls.Add(txtDP);
                 groupBoxDataPembeli[0].Controls.Add(txtTO);
@@ -1028,8 +1034,12 @@ namespace POS_Andy
                         int isTO = 0;
                         int isDP = 0;
                         int isPalet = 0;
+                        int item_price = 0;
+                        int minQtyGrosir = 0;
+                        int hargaGrosir = 0;
+                        int hargaEceran = 0;
 
-                        if(txtTO.Text != "" && txtTO.Text != "0")
+                        if (txtTO.Text != "" && txtTO.Text != "0")
                         {
                             if (Regex.IsMatch(txtTO.Text, @"^\d+$") == true)
                                 isTO = int.Parse(txtTO.Text);
@@ -1062,9 +1072,21 @@ namespace POS_Andy
                                 item_name = dgv_invoice.Rows[i].Cells["Nama Barang"].Value.ToString();
                                 vendor_name = dgv_invoice.Rows[i].Cells["Nama Vendor"].Value.ToString();
                                 item_total = int.Parse(dgv_invoice.Rows[i].Cells["Jumlah Beli"].Value.ToString());
+                                minQtyGrosir = int.Parse(dgv_invoice.Rows[i].Cells["Min. Qty Grosir"].Value.ToString());
+                                hargaGrosir = int.Parse(dgv_invoice.Rows[i].Cells["Harga Grosir"].Value.ToString());
+                                hargaEceran = int.Parse(dgv_invoice.Rows[i].Cells["Harga Eceran"].Value.ToString());
 
+                                if (item_total >= minQtyGrosir)
+                                {
+                                    item_price = hargaGrosir;
+                                }
+                                else
+                                {
+                                    item_price = hargaEceran;
+                                }
                                 string insertInvoiceDetail = Core.TambahInvoiceDetail(int.Parse(lastInvoiceId), "INV" + year + month + day + nextInvoiceNo
-                                                            , item_name, vendor_name, item_total, isTO, isDP, isPalet);
+                                                            , item_name, vendor_name, item_total, isTO, isDP, isPalet
+                                                            , item_price);
 
                                 alertMsg = insertInvoiceDetail;
                             }

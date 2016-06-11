@@ -410,7 +410,7 @@ namespace POS_Andy.Classes
 
         #region TambahInvoiceDetail
         public static string TambahInvoiceDetail(int invoice_id, string invoice_no, string item_name, string vendor_name, int item_total
-                                        , int is_TO, int is_DP, int is_Palet)
+                                        , int is_TO, int is_DP, int is_Palet, int item_price)
         {
             string result = "";
             string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
@@ -428,6 +428,7 @@ namespace POS_Andy.Classes
                                     ",item_name                                          " +
                                     ",vendor_name                                        " +
                                     ",item_total                                        " +
+                                    ",item_price                                       " +
                                     ",is_TO                                         " +
                                     ",is_DP                                           " +
                                     ",is_Palet                                           " +
@@ -439,6 +440,7 @@ namespace POS_Andy.Classes
                                     ",@item_name                                               " +
                                     ",@vendor_name                                               " +
                                     ",@item_total                                               " +
+                                    ",@item_price                                              " +
                                     ",@is_TO                                               " +
                                     ",@is_DP                                               " +
                                     ",@is_Palet                                               " +
@@ -451,6 +453,7 @@ namespace POS_Andy.Classes
                 cmd.Parameters.AddWithValue("@item_name", item_name);
                 cmd.Parameters.AddWithValue("@vendor_name", vendor_name);
                 cmd.Parameters.AddWithValue("@item_total", item_total);
+                cmd.Parameters.AddWithValue("@item_price", item_price);
                 cmd.Parameters.AddWithValue("@is_TO", is_TO);
                 cmd.Parameters.AddWithValue("@is_DP", is_DP);
                 cmd.Parameters.AddWithValue("@is_Palet", is_Palet);
@@ -1184,6 +1187,97 @@ namespace POS_Andy.Classes
                                     "FROM ms_invoice where DAY(invoice_dt) = DAY(NOW())                                " +
                                     " AND MONTH(invoice_dt) = MONTH(NOW()) " +
                                     " AND YEAR(invoice_dt) = YEAR(NOW()) ORDER BY invoice_dt DESC LIMIT 1";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return dt;
+        }
+        #endregion
+
+        #region SelectProfit
+        public static DataTable SelectProfit(string filter_type, string day, string month, string year)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                if(filter_type == "Harian")
+                {
+                    cmd.CommandText = "SELECT sum((a.item_total * a.item_price)) as total_penjualan, sum((a.item_total * x.cost_price)) as total_modal " +
+                                    "FROM ms_invoice_detail a " +
+                                    "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
+                                    ", (select cost_price, item_name, vendor_name from ms_item) as x " +
+                                    "where x.item_name = a.item_name AND x.vendor_name = a.vendor_name " +
+                                    "AND day(a.invoice_dt) = @day AND month(a.invoice_dt) = @month  AND year(a.invoice_dt) = @year";
+                }
+                else if (filter_type == "Mingguan")
+                {
+                    cmd.CommandText = "SELECT sum((a.item_total * a.item_price)) as total_penjualan, sum((a.item_total * x.cost_price)) as total_modal " +
+                                    "FROM ms_invoice_detail a " +
+                                    "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
+                                    ", (select cost_price, item_name, vendor_name from ms_item) as x " +
+                                    "where x.item_name = a.item_name AND x.vendor_name = a.vendor_name " +
+                                    "AND a.invoice_dt >= DATE(NOW()) - INTERVAL 7 DAY ";
+                }
+                else if (filter_type == "Bulanan")
+                {
+                    cmd.CommandText = "SELECT sum((a.item_total * a.item_price)) as total_penjualan, sum((a.item_total * x.cost_price)) as total_modal " +
+                                    "FROM ms_invoice_detail a " +
+                                    "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
+                                    ", (select cost_price, item_name, vendor_name from ms_item) as x " +
+                                    "where x.item_name = a.item_name AND x.vendor_name = a.vendor_name " +
+                                    "AND month(a.invoice_dt) = @month AND year(a.invoice_dt) = @year ";
+                }
+
+                cmd.Parameters.AddWithValue("@day", int.Parse(day));
+                cmd.Parameters.AddWithValue("@month", int.Parse(month));
+                cmd.Parameters.AddWithValue("@year", int.Parse(year));
+
+
+                // ini kalo mau di breakdown detail pembelian item apa aja
+                //SELECT a.item_name, a.item_total, a.item_price, x.cost_price, (a.item_total * a.item_price) as total_penjualan, (a.item_total * x.cost_price) as total_modal
+                //FROM ms_invoice_detail a
+                //LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name
+                //, (select cost_price, item_name, vendor_name from ms_item) as x
+                //where x.item_name = a.item_name AND x.vendor_name = a.vendor_name
+                //AND day(a.invoice_dt) = 10
+                //group by a.item_name
+
+
+
+
+                //SELECT(
+                //FROM ms_invoice_detail a
+                //LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name
+                //, (select cost_price, item_name, vendor_name from ms_item) as x
+                //where x.item_name = a.item_name AND x.vendor_name = a.vendor_name
+                //AND day(a.invoice_dt) = 10
+
+                //                                    SELECT *
+                //FROM ms_invoice_detail a
+                //LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name
+                //, (select cost_price, item_name, vendor_name from ms_item) as x
+                //where x.item_name = a.item_name AND x.vendor_name = a.vendor_name
+                ////AND day(a.invoice_dt) = 10
+                //                                    where DAY(invoice_dt) = DAY(NOW())                                " +
+                //                                    " AND MONTH(invoice_dt) = MONTH(NOW()) " +
+                //                                    " AND YEAR(invoice_dt) = YEAR(NOW()) ORDER BY invoice_dt DESC LIMIT 1";
 
                 da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);
