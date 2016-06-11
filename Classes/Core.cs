@@ -1203,6 +1203,45 @@ namespace POS_Andy.Classes
         }
         #endregion
 
+        #region SelectProfit
+        public static DataTable SelectProfit(string filter_type, string day, string month, string year)
+        {
+            string result = "";
+            string conStr = "server=localhost;database=pos_andy;uid=root;pwd=;";
+            DataTable dt = new DataTable();
+            MySqlConnection con = new MySqlConnection(conStr);
+            MySqlCommand cmd = con.CreateCommand();
+            MySqlDataAdapter da;
+
+            try
+            {
+                con.Open();
+
+                cmd.CommandText = "SELECT (purchase_total - cost_total) as laba, purchase_total as penjualan, cost_total as harga_modal    " +
+                                    "FROM ms_invoice_detail a " +
+                                    "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
+                                    "LEFT JOIN (SELECT "
+                                    
+                                    
+                                    where DAY(invoice_dt) = DAY(NOW())                                " +
+                                    " AND MONTH(invoice_dt) = MONTH(NOW()) " +
+                                    " AND YEAR(invoice_dt) = YEAR(NOW()) ORDER BY invoice_dt DESC LIMIT 1";
+
+                da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                con.Close();
+                da.Dispose();
+            }
+            catch (Exception ex)
+            {
+                result = "Error";
+            }
+
+            return dt;
+        }
+        #endregion
+
         //wb 20160610
         #region BackupDB
         public static void BackupDB()

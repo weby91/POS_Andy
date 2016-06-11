@@ -90,7 +90,7 @@ namespace POS_Andy {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Judul_Report {
+        public CrystalDecisions.Shared.IParameterField Parameter_judul_report_param {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
