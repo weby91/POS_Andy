@@ -23,6 +23,8 @@ namespace POS_Andy
             rptLaba reportLaba = new rptLaba();
             CenterToScreen();
             cbPeriode.SelectedIndex = 0;
+            cbBulan.SelectedIndex = 0;
+            cbTahun.SelectedIndex = 0;
 
             try
             {
@@ -117,17 +119,102 @@ namespace POS_Andy
                     else
                     {
                         result = "Tidak ada penjualan di tanggal tersebut";
+                        crystalReportViewer1.Visible = false;
+                    }
+                }
+                else if(filter_type == "Mingguan")
+                {
+                    dt = Core.SelectProfit(filter_type, day.ToString(), month.ToString(), year.ToString());
+
+                    if (dt.Rows.Count > 0 && dt.Rows[0]["total_penjualan"].ToString() != "")
+                    {
+                        total_penjualan = dt.Rows[0]["total_penjualan"].ToString();
+                        total_modal = dt.Rows[0]["total_modal"].ToString();
+
+                        reportLaba.SetParameterValue("judul_report_param", "Report " + cbPeriode.SelectedItem.ToString());
+                        reportLaba.SetParameterValue("total_penjualan_param", total_penjualan);
+                        reportLaba.SetParameterValue("total_modal_param", total_modal);
+
+                        crystalReportViewer1.ReportSource = reportLaba;
+                        crystalReportViewer1.Visible = true;
+                    }
+                    else
+                    {
+                        result = "Tidak ada penjualan dalam 1 minggu terakhir";
+                        crystalReportViewer1.Visible = false;
+                    }
+                }
+                else if (filter_type == "Bulanan")
+                {
+                    switch (cbBulan.SelectedItem.ToString())
+                    {
+                        case "Januari":
+                            month = 1;
+                            break;
+                        case "Februari":
+                            month = 2;
+                            break;
+                        case "Maret":
+                            month = 3;
+                            break;
+                        case "April":
+                            month = 4;
+                            break;
+                        case "Mei":
+                            month = 5;
+                            break;
+                        case "Juni":
+                            month = 6;
+                            break;
+                        case "Juli":
+                            month = 7;
+                            break;
+                        case "Agustus":
+                            month = 8;
+                            break;
+                        case "September":
+                            month = 9;
+                            break;
+                        case "Oktober":
+                            month = 10;
+                            break;
+                        case "November":
+                            month = 11;
+                            break;
+                        case "Desember":
+                            month = 12;
+                            break;
                     }
 
+                    dt = Core.SelectProfit(filter_type, day.ToString(), month.ToString(), cbTahun.SelectedItem.ToString());
+
+                    if (dt.Rows.Count > 0 && dt.Rows[0]["total_penjualan"].ToString() != "")
+                    {
+                        total_penjualan = dt.Rows[0]["total_penjualan"].ToString();
+                        total_modal = dt.Rows[0]["total_modal"].ToString();
+
+                        reportLaba.SetParameterValue("judul_report_param", "Report " + cbPeriode.SelectedItem.ToString());
+                        reportLaba.SetParameterValue("total_penjualan_param", total_penjualan);
+                        reportLaba.SetParameterValue("total_modal_param", total_modal);
+
+                        crystalReportViewer1.ReportSource = reportLaba;
+                        crystalReportViewer1.Visible = true;
+                    }
+                    else
+                    {
+                        result = "Tidak ada penjualan di bulan " + cbBulan.SelectedItem.ToString() + " tahun " + cbTahun.SelectedItem.ToString();
+                        crystalReportViewer1.Visible = false;
+                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = ex.ToString();
             }
             finally
             {
-                MessageBox.Show(result);
+                if (result != "")
+                    MessageBox.Show(result);
             }
         }
     }

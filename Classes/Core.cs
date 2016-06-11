@@ -1233,7 +1233,7 @@ namespace POS_Andy.Classes
                                     "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
                                     ", (select cost_price, item_name, vendor_name from ms_item) as x " +
                                     "where x.item_name = a.item_name AND x.vendor_name = a.vendor_name " +
-                                    "AND DATE(invoice_dt) = DATE_SUB(CURDATE(), INTERVAL 7 DAY) ";
+                                    "AND a.invoice_dt >= DATE(NOW()) - INTERVAL 7 DAY ";
                 }
                 else if (filter_type == "Bulanan")
                 {
@@ -1242,7 +1242,7 @@ namespace POS_Andy.Classes
                                     "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
                                     ", (select cost_price, item_name, vendor_name from ms_item) as x " +
                                     "where x.item_name = a.item_name AND x.vendor_name = a.vendor_name " +
-                                    "DATE(edit_date) = DATE_SUB(CURDATE(), INTERVAL 7 DAY) ";
+                                    "AND month(a.invoice_dt) = @month AND year(a.invoice_dt) = @year ";
                 }
 
                 cmd.Parameters.AddWithValue("@day", int.Parse(day));

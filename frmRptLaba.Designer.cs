@@ -108,10 +108,10 @@
             this.cbBulan.FormattingEnabled = true;
             this.cbBulan.Items.AddRange(new object[] {
             "Januari",
-            "February",
+            "Februari",
             "Maret",
             "April",
-            "Mey",
+            "Mei",
             "Juni",
             "Juli",
             "Agustus",
