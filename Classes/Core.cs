@@ -1217,12 +1217,50 @@ namespace POS_Andy.Classes
             {
                 con.Open();
 
-                cmd.CommandText = "SELECT (purchase_total - cost_total) as laba, purchase_total as penjualan, cost_total as harga_modal    " +
+                if(filter_type == "Harian")
+                {
+                    cmd.CommandText = "SELECT sum((a.item_total * a.item_price)) as total_penjualan, sum((a.item_total * x.cost_price)) as total_modal " +
                                     "FROM ms_invoice_detail a " +
                                     "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
-                                    "LEFT JOIN (SELECT "
-                                    
-                                    
+                                    ", (select cost_price, item_name, vendor_name from ms_item) as x " +
+                                    "where x.item_name = a.item_name AND x.vendor_name = a.vendor_name " +
+                                    "AND day(a.invoice_dt) = @day AND month(a.invoice_dt) = @month  AND year(a.invoice_dt =@year";
+                }
+                else if (filter_type == "Harian")
+                {
+                    cmd.CommandText = "SELECT sum((a.item_total * a.item_price)) as total_penjualan, sum((a.item_total * x.cost_price)) as total_modal " +
+                                    "FROM ms_invoice_detail a " +
+                                    "LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name " +
+                                    ", (select cost_price, item_name, vendor_name from ms_item) as x " +
+                                    "DATE(edit_date) = DATE_SUB(CURDATE(), INTERVAL 7 DAY) ";
+                }
+
+
+                    // ini kalo mau di breakdown detail pembelian item apa aja
+                    //SELECT a.item_name, a.item_total, a.item_price, x.cost_price, (a.item_total * a.item_price) as total_penjualan, (a.item_total * x.cost_price) as total_modal
+                    //FROM ms_invoice_detail a
+                    //LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name
+                    //, (select cost_price, item_name, vendor_name from ms_item) as x
+                    //where x.item_name = a.item_name AND x.vendor_name = a.vendor_name
+                    //AND day(a.invoice_dt) = 10
+                    //group by a.item_name
+
+
+
+
+                    SELECT(
+                                    //FROM ms_invoice_detail a
+                                    //LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name
+                                    //, (select cost_price, item_name, vendor_name from ms_item) as x
+                                    //where x.item_name = a.item_name AND x.vendor_name = a.vendor_name
+                                    //AND day(a.invoice_dt) = 10
+
+//                                    SELECT *
+//FROM ms_invoice_detail a
+//LEFT JOIN ms_invoice b ON b.invoice_name = a.invoice_name
+//, (select cost_price, item_name, vendor_name from ms_item) as x
+//where x.item_name = a.item_name AND x.vendor_name = a.vendor_name
+//AND day(a.invoice_dt) = 10
                                     where DAY(invoice_dt) = DAY(NOW())                                " +
                                     " AND MONTH(invoice_dt) = MONTH(NOW()) " +
                                     " AND YEAR(invoice_dt) = YEAR(NOW()) ORDER BY invoice_dt DESC LIMIT 1";
