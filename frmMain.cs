@@ -241,5 +241,11 @@ namespace POS_Andy
         {
 
         }
+
+        private void tstrip_daily_sales_Click(object sender, EventArgs e)
+        {
+            frmRptLaba fRptLaba = new frmRptLaba();
+            fRptLaba.Show();
+        }
     }
 }

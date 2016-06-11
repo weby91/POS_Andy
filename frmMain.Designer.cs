@@ -241,7 +241,7 @@
             this.kategoriToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tambahKategoriToolStripMenuItem});
             this.kategoriToolStripMenuItem.Name = "kategoriToolStripMenuItem";
-            this.kategoriToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.kategoriToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.kategoriToolStripMenuItem.Text = "Kategori";
             // 
             // tambahKategoriToolStripMenuItem
@@ -256,7 +256,7 @@
             this.satuanToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.listSatuanToolStripMenuItem});
             this.satuanToolStripMenuItem.Name = "satuanToolStripMenuItem";
-            this.satuanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.satuanToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.satuanToolStripMenuItem.Text = "Satuan";
             // 
             // listSatuanToolStripMenuItem
@@ -482,6 +482,7 @@
             this.tstrip_daily_sales.Size = new System.Drawing.Size(70, 72);
             this.tstrip_daily_sales.Text = "Daily Sales";
             this.tstrip_daily_sales.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tstrip_daily_sales.Click += new System.EventHandler(this.tstrip_daily_sales_Click);
             // 
             // tsrtip_stocksin
             // 
