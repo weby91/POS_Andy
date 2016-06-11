@@ -30,6 +30,8 @@ namespace POS_Andy
                 dtpHarian.CustomFormat = "dd-MM-yyyy";
 
                 reportLaba.SetParameterValue("judul_report_param", "Report " + cbPeriode.SelectedItem.ToString());
+                reportLaba.SetParameterValue("total_penjualan_param", 0);
+                reportLaba.SetParameterValue("total_modal_param", 0);
             }
             catch (Exception ex)
             {
@@ -38,6 +40,7 @@ namespace POS_Andy
             finally
             {
                 crystalReportViewer1.ReportSource = reportLaba;
+                crystalReportViewer1.Visible = false;
             }
 
         }
@@ -79,6 +82,9 @@ namespace POS_Andy
             string filter_type = cbPeriode.SelectedItem.ToString();
             string result = "";
             int day, month, year;
+            string total_penjualan = "";
+            string total_modal = "";
+            rptLaba reportLaba = new rptLaba();
             DataTable dt = new DataTable();
 
             try
@@ -95,20 +101,33 @@ namespace POS_Andy
 
                     dt = Core.SelectProfit(filter_type, day.ToString(), month.ToString(), year.ToString());
 
-                    if (dt.Rows.Count > 0)
+                    if (dt.Rows.Count > 0 && dt.Rows[0]["total_penjualan"].ToString() != "")
                     {
+                        total_penjualan = dt.Rows[0]["total_penjualan"].ToString();
+                        total_modal = dt.Rows[0]["total_modal"].ToString();
 
+                        reportLaba.SetParameterValue("judul_report_param", "Report " + cbPeriode.SelectedItem.ToString());
+                        reportLaba.SetParameterValue("total_penjualan_param", total_penjualan);
+                        reportLaba.SetParameterValue("total_modal_param", total_modal);
+
+                        crystalReportViewer1.ReportSource = reportLaba;
+                        crystalReportViewer1.Visible = true;
+
+                    }
+                    else
+                    {
+                        result = "Tidak ada penjualan di tanggal tersebut";
                     }
 
                 }
             }
-            catch
+            catch(Exception ex)
             {
-
+                result = ex.ToString();
             }
             finally
             {
-
+                MessageBox.Show(result);
             }
         }
     }

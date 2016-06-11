@@ -33,11 +33,11 @@
             this.gbHarian = new System.Windows.Forms.GroupBox();
             this.dtpHarian = new System.Windows.Forms.DateTimePicker();
             this.btnCari = new System.Windows.Forms.Button();
-            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.rptLaba1 = new POS_Andy.rptLaba();
             this.gbBulanan = new System.Windows.Forms.GroupBox();
             this.cbBulan = new System.Windows.Forms.ComboBox();
             this.cbTahun = new System.Windows.Forms.ComboBox();
+            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.rptLaba1 = new POS_Andy.rptLaba();
             this.gbHarian.SuspendLayout();
             this.gbBulanan.SuspendLayout();
             this.SuspendLayout();
@@ -91,17 +91,6 @@
             this.btnCari.Text = "Cari";
             this.btnCari.UseVisualStyleBackColor = true;
             this.btnCari.Click += new System.EventHandler(this.btnCari_Click);
-            // 
-            // crystalReportViewer1
-            // 
-            this.crystalReportViewer1.ActiveViewIndex = 0;
-            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.crystalReportViewer1.Location = new System.Drawing.Point(12, 212);
-            this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.ReportSource = this.rptLaba1;
-            this.crystalReportViewer1.Size = new System.Drawing.Size(821, 327);
-            this.crystalReportViewer1.TabIndex = 2;
             // 
             // gbBulanan
             // 
@@ -180,11 +169,22 @@
             this.cbTahun.Size = new System.Drawing.Size(121, 28);
             this.cbTahun.TabIndex = 1;
             // 
+            // crystalReportViewer1
+            // 
+            this.crystalReportViewer1.ActiveViewIndex = 0;
+            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crystalReportViewer1.Location = new System.Drawing.Point(12, 212);
+            this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.ReportSource = this.rptLaba1;
+            this.crystalReportViewer1.Size = new System.Drawing.Size(1020, 358);
+            this.crystalReportViewer1.TabIndex = 2;
+            // 
             // frmRptLaba
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 607);
+            this.ClientSize = new System.Drawing.Size(1044, 741);
             this.Controls.Add(this.gbBulanan);
             this.Controls.Add(this.btnCari);
             this.Controls.Add(this.gbHarian);
